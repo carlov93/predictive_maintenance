@@ -1,12 +1,3 @@
-# General Terms
-## Epochs
-- one epoch = one forward pass and one backward pass of all the training examples
-
-## Batch Size
-- The batch size defines the number of samples that will be propagated through the network simultaneously. 
-- The number of samples is often a power of 2, to facilitate memory allocation on GPU.
-- The algorithm takes the first 128 samples (from 1st to 128th) from the training dataset and trains the network. Next it takes the second 128 samples (from 129st to ...th) and trains the network again.
-
 ## Activation Functions
 Neural network activation functions are a crucial component of deep learning. Activation functions determine the output of a deep learning model, its accuracy, and also the computational efficiency of training a model. Activation functions also have a major effect on the neural network’s ability to converge and the convergence speed, or in some cases, activation functions might prevent neural networks from converging in the first place. <br>
 The function is attached to each neuron in the network, and determines whether it should be activated (“fired”) or not, based on whether each neuron’s input is relevant for the model’s prediction. <br>
@@ -69,4 +60,4 @@ Modern neural network models use non-linear activation functions. They allow the
 
 
 
-![](./pictures/activation_functions.png)
+![](../pictures/activation_functions.png)

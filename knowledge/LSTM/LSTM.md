@@ -28,15 +28,18 @@ Traditionally, LSTMs use the tanh activation function for the activation of the 
 
 ## Architecture of a LSTM
 
-![](./pictures/lstm_key.png)
+![](../pictures/lstm_key.png)
 
 ### Version A
-![](./pictures/lstm_mit_c.png)
+![](../pictures/lstm_mit_c.png)
 
-![](./pictures/lstm_mit_c_formula.png)
+![](../pictures/lstm_mit_c_formula.png)
 
 
-### Version B
-![](./pictures/lstm_ohne_c.png)
+### Version B (same like Prof. Niggemann)
+![](../pictures/lstm_ohne_c.png)
 
-![](./pictures/lstm_ohne_c_formula.png)
+![](../pictures/lstm_nigemann.png)
+
+![](../pictures/lstm_ohne_c_formula.png)
+

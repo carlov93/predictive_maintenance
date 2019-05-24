@@ -1,9 +1,9 @@
 # Backpropagation
-Neural networks are nothing more than composite (=zusammengesetzt) mathematical functions that are delicately tweaked (trained) to output the required result. <br>
-![](./pictures/2.png)
+Neural networks are nothing more than composite (=zusammengesetzt) mathematical functions that are delicately tweaked (trained) to output the required result. NN are the compositions of functions on matrices. <br>
+![](../pictures/2.png)
 Here you can see the NN written as a nested function:
 
-![](./pictures/1.gif) <br>
+![](../pictures/1.gif) <br>
 ## Math Basics
 - A scalar valued function is a function that takes one or more values but returns a single value. f(x,y,z) = x+2y+5z is an example of a scalar valued function. 
 - A vector valued function is a function which takes a real number, t, as an input and returns a vector as an output. 
@@ -20,9 +20,9 @@ Here you can see the NN written as a nested function:
 A loss (error) function E = L(t,y) is used for measuring the discrepancy between the expected output t and the actual output y. This loss function should be as small as possible.<br>
 We can ask ourselves the following question: How much the total error will change if we change the internal weight of the neural network with a certain small value δW.
 
-![](./pictures/5.png) <br>
+![](../pictures/5.png) <br>
  
-![](./pictures/6.png) <br>
+![](../pictures/6.png) <br>
 
 We want to know the rate of which the error changes relatively to the changes on the weight.
 - If the derivative is positive, meaning the error increases if we increase the weights, then we should decrease the weight.
