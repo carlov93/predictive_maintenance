@@ -19,3 +19,6 @@ Typically, in the true posterior distribution, the latent variables are not inde
 When you write out the formula for KL divergence, you'll notice that we now have a sum of terms involving V, which we can minimize. So now our estimation procedure turns into an optimization problem.
 
 Once we arrive at a V*, we can use Q(Z|V*) as our best guess at the posterior when performing estimation or inference.
+
+
+variational inference --> converting an inference problem in a probabilistic model to an optimization problem
