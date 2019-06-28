@@ -25,9 +25,9 @@ loss.backward() computes dloss/dx for every parameter x in the model which has r
 
 
 ## nn.Module vs autograd.Function
-There is a difference between a costum function and a costum modul
-1. If you want to create a custom function and torch have enough function to code it (torch.pow(), torch.sum(), +, -, ...) , you should use nn.Module as a base. So use nn.Module if you are not using any special-external library (like scipy, nlp etc. for computation) 
-2.  An own custom function which inherits from autograd.Function require to have backward pass coded by user
+There is a difference between a costum function and a costum module:
+1. If you want to create a custom function and torch have enough function to code it (torch.pow(), torch.sum(), +, -, ...) , you should use nn.Module as a base, because you don't have to implement backward pass with partial derivation. So use nn.Module if you are not using any special-external library (like scipy, nlp etc. for computation) 
+2. If you use special functions which are not implemented in torch, you have to create a cusotm function. A custom function inherits from autograd.Function requires to have backward pass coded by user.
 
 ## Code of own nn.Module
 ```python
