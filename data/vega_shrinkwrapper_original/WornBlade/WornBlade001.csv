@@ -1,4 +1,4 @@
-Timestamp,pCut Motor: Torque," pCut CTRL Position controller: Lag error"," pCut CTRL Position controller: Actual position"," pCut CTRL Position controller: Actual speed"," pSvolFilm CTRL Position controller: Actual position"," pSvolFilm CTRL Position controller: Actual speed"," pSvolFilm CTRL Position controller: Lag error"
+timestamp, cut torque, cut lag error, cut position, cut speed, film position, film speed, film lag error
 -0.187999973,-0.001146008,0.004241943,-838822,0,35096,5.0085783,0.008013844
 -0.183999973,0.014685052,0.001495361,-838822,6.866455078,35096,0,0.007012069
 -0.179999974,0.023437247,-0.001251221,-838821,13.73291016,35096,2.50428915,0.008013844
