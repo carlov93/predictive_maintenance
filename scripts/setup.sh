@@ -1,5 +1,6 @@
 #!/bin/bash
 # create virtual environment
+cd ..
 python3 -m venv venvMasterarbeit
 source venvMasterarbeit/bin/activate
 pip install ipykernel
