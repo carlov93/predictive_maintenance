@@ -10,6 +10,5 @@ pip install torch
 pip install pandas
 pip install tensorflow
 pip install keras
-pip install torchsummary
 pip install sklearn
 pip install matplotlib
