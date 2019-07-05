@@ -1,4 +1,8 @@
 ## Next steps on programming site
+1. Controll 
+
+2. Plot residuals agains predictors
+
 1. Understand the difference between prediction on new blade data and worn blade data
 
 2. Check sensor data regarding random walk (check each sensor time series by looking at the autocorrelation)
