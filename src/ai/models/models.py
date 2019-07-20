@@ -44,7 +44,7 @@ class LstmMse(nn.Module):
     
 class LstmMseDropout(nn.Module):
     def __init__(self, batch_size, input_dim, n_hidden, n_layers, dropout_rate):
-        super(LstmMse, self).__init__()
+        super(LstmMseDropout, self).__init__()
         # Attributes for LSTM Network
         self.input_dim = input_dim
         self.n_hidden = n_hidden

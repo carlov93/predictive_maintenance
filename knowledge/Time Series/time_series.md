@@ -1,4 +1,29 @@
 # Time Series
+## Comparision to Cross-sectional data
+- Cross-sectional data is a type of data collected by observing many subjects (such as individuals, firms, ...) at the same point of time, or without regard to differences in time. 
+- Analysis of cross-sectional data usually consists of comparing the differences among the subjects.
+- The datapoints must be indipendent and identically distributed 
+
+## Stationarity of time series
+- the realization is a draw from a random variable (draw out of a distribution)
+- We are not capable of making multiple draws out of history (realization 1 to realization M): So we have only one realisation of the stochastic process
+    - Trick: We say that each realization of the time series is a draw from the same distribution 
+- Conclusion: A time series is stationary if the distribution function is not a function of t (is constant over time). So two subsamples of a timeseries have the same underlying distribution
+
+![](../pictures/stationary.png)
+
+### Weak stationarity
+- Mean is constant and doesn't depent on t
+- Variance is constant and doesn't dpent on t
+- Covariance has to only depent on the distance between two observations within a time series
+
+### Weak dependency
+- $y_{t}$ and $y_{t-h}$ are approx. indipendent for h to infinity
+- That implies, that each observation contains new information about the underlying distribution
+
+--> Weak stationarity + weak dependency: $\overline{y_t}$ --> $E(y_t)$ <br>
+--> Weak stationarity + weak dependency repalce the indipendent and identically distributed assumption when working with cross-sectional data
+
 ## Why time series data is unique
 - A time series is a series of data points indexed in time. 
 - The key point about time series data is that the ordering of the time points matters. For many sets of data (for example, the heights of a set of school children) it does not really matter which order the data are obtained or listed. One order is good as another. For time series data, the ordering is crucial.
