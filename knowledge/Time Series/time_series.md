@@ -24,6 +24,12 @@
 --> Weak stationarity + weak dependency: $\overline{y_t}$ --> $E(y_t)$ <br>
 --> Weak stationarity + weak dependency repalce the indipendent and identically distributed assumption when working with cross-sectional data
 
+
+- In general time series are not really different from other machine learning problems - you want your test set to 'look like' your training set, because you want the model you learned on your training set to still be appropriate for your test set. 
+- That's the important underlying concept regarding stationarity. Time series have the additional complexity that there may be long term structure in your data that your model may not be sophisticated enough to learn. For example, when using an autoregressive lag of N, we can't learn dependencies over intervals longer than N. Hence, when using simple models like ARIMA, we want data to also be locally stationary.
+- Stationary means the model's statistics don't change over time ('locally' stationary). If you separated your training set into two intervals and trained on them separately, and got two very different models - what would you conclude from that? These issues arise if the data is 'non-stationary'.
+
+
 ## Why time series data is unique
 - A time series is a series of data points indexed in time. 
 - The key point about time series data is that the ordering of the time points matters. For many sets of data (for example, the heights of a set of school children) it does not really matter which order the data are obtained or listed. One order is good as another. For time series data, the ordering is crucial.

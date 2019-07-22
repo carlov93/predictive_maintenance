@@ -4,9 +4,6 @@ import torch.optim as optim
 import pandas as pd
 import numpy as np
 
-# own Modules 
-from models import LstmMse
-
 class Trainer():
     def __init__(self, model, optimizer, scheduler, criterion, patience, location_model, location_stats):
         self.model = model

@@ -9,6 +9,7 @@ import torch
 class DataPreperator():
     def __init__(self, path):
         self.path = path
+        self.scaler = StandardScaler()
         
     def load_data(self):
         return pd.read_csv(self.path)
@@ -18,13 +19,15 @@ class DataPreperator():
         train_data = train_data.drop(labels="timestamp", axis=1)
         validation_data = validation_data.drop(labels="timestamp", axis=1)
         # Initialise standard scaler
-        scaler = StandardScaler()
-        scaler.fit(train_data)
+        self.scaler.fit(train_data)
         # Transform data
-        train_scaled = scaler.transform(train_data)
-        validation_scaled = scaler.transform(validation_data)
+        train_scaled = self.scaler.transform(train_data)
+        validation_scaled = self.scaler.transform(validation_data)
         return train_scaled, validation_scaled
         
+    def provide_statistics(self):
+        return self.scaler.mean_, self.scaler.var_
+    
     def provide_data(self, stake_training_data):
         dataset = self.load_data()
         amount_training_data = round(len(dataset)*stake_training_data)
@@ -35,8 +38,11 @@ class DataPreperator():
         return train_preprocessed, validation_preporcessed
 
 class DataPreperatorPrediction():
-    def __init__(self, path):
+    def __init__(self, path, mean_training_data, var_training_data, input_dim):
         self.path = path
+        self.mean_training_data = mean_training_data
+        self.var_training_data = var_training_data
+        self.input_dim = input_dim
         
     def load_data(self):
         return pd.read_csv(self.path)
@@ -46,13 +52,9 @@ class DataPreperatorPrediction():
         data = train_data.drop(labels="timestamp", axis=1).values
         
         # Transform data for prediction with mean and variance of training data
-        mean_training_data = [-5.37536613e-02, -2.53111489e-04, -8.82854465e+05, 
-                              7.79034183e+02, 1.45531178e+04, 1.37766733e+03, 6.50149764e-01] 
-        var_training_data = [1.25303578e-01, 1.16898690e-03, 2.86060835e+06, 1.64515717e+06, 
-                             6.85728371e+06, 3.63196175e+05, 8.21463343e-03]
-        train_scaled = np.zeros(shape=(len(data[:,0]),7))
+        train_scaled = np.zeros(shape=(len(data[:,0]),self.input_dim))
         i = 0
-        for mean, var in zip(mean_training_data, var_training_data):
+        for mean, var in zip(self.mean_training_data, self.var_training_data):
             train_scaled[:,i] = np.subtract(data[:,i], mean)
             train_scaled[:,i] = np.divide(train_scaled[:,i], np.sqrt(var))
             i +=1
