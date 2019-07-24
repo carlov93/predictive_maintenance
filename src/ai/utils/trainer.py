@@ -91,8 +91,8 @@ class Trainer():
                 'model_state_dict': self.model.state_dict(),
                 'optimizer_state_dict': self.optimizer.state_dict(),
                 'loss': mean_epoch_validation_loss
-            }, self.location_model+"_Seq:"+str(sequenze_size)+"_Layer:"+
-                str(n_lstm_layer)+"_Hidden:"+str(n_hidden)+"_Step:"+str(stepsize)+"_Loss"+str(round(self.lowest_loss,2))+".pt")
+            }, self.location_model+"_Seq"+str(sequenze_size)+"_Layer"+
+                str(n_lstm_layer)+"_Hidden"+str(n_hidden)+"_Step"+str(stepsize)+".pt")
             print("Epoch {}: best model saved with loss: {}".format(epoch, mean_epoch_validation_loss))
             return True
     
@@ -105,9 +105,9 @@ class Trainer():
                 return False
             return True
     
-    def save_statistic(self, hist_loss, sequenze_size, n_lstm_layer, n_hidden, stepsize):
+    def save_statistic(self, hist_loss, sequenze_size, n_lstm_layer, n_hidden, stepsize, time):
         df = pd.DataFrame(hist_loss)
-        df.to_csv(self.location_stats+"_Seq:"+str(sequenze_size)+"_Layer:"+
-                str(n_lstm_layer)+"_Hidden:"+str(n_hidden)+"_Step:"+str(stepsize)+"_Loss"+str(round(self.lowest_loss,2))+".csv",
+        df.to_csv(self.location_stats+"_Loss"+str(round(self.lowest_loss,2))+"_Seq"+str(sequenze_size)+"_Layer"+
+                str(n_lstm_layer)+"_Hidden"+str(n_hidden)+"_Step"+str(stepsize)+"_Time"+str(round(time,0))+".csv",
                   sep=";", index=False)
         
