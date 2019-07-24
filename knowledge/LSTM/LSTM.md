@@ -6,6 +6,15 @@ In a feed-forward there is no state maintstate maintained by the network at all.
 A Long-short Term Memory network (LSTM) is a type of recurrent neural network designed to overcome problems of basic RNNs so the network can learn long-term dependencies. Specifically, it tackles vanishing and exploding gradients – the phenomenon where, when you backpropagate through time too many time steps, the gradients either vanish (go to zero) or explode (get very large) because it becomes a product of numbers all greater or all less than one. 
 In the case of an LSTM, for each element in the sequence, there is a corresponding hidden state ht, which in principle can contain information from arbitrary points earlier in the sequence.
 
+## Shared weights of LSTM model
+- The 'shared weights' perspective comes from thinking about RNNs as feedforward networks unrolled across time. 
+- If the weights were different at each moment in time, this would just be a feedforward network.
+- If you did this, the number of parameters would grow linearly with the number of time steps. That would be a big explosion of parameters for sequences of any appreciable length. 
+- It would indeed make the network more powerful, if you had the massive computational resources to run it and the massive data to constrain it. 
+- For long sequences, it would probably be computationally infeasible and you'd get overfitting. 
+- Interestingly, RNNs can still learn temporal structure that extends beyond the truncation length, because the recurrent units can store memory from before.
+
+
 ## Gates of LSTM:
 Gates = neural network which decise wheter information pass a gate or not. Gates in LSTM are the sigmoid activation functions because we want a gate to give only positive values and should be able to give us a clear cut answer whether, we need to keep a particular feature (1) or we need to discard that feature (0). <br>
 LSTM will have 3 gates:
