@@ -101,7 +101,7 @@ class Trainer():
                 'optimizer_state_dict': self.optimizer.state_dict(),
                 'loss': mean_epoch_validation_loss
             }, self.location_model+"_InputSize"+str(input_size)+"_LayerLstm"+
-                str(n_lstm_layer)+"_HiddenLstm"+str(n_hidden_lstm)+"_HiddenFc"+str(n_hidden_fc)+"_Seq"+seq_size+".pt")
+                str(n_lstm_layer)+"_HiddenLstm"+str(n_hidden_lstm)+"_HiddenFc"+str(n_hidden_fc)+"_Seq"+str(seq_size)+".pt")
             print("Epoch {}: best model saved with loss: {}".format(epoch, mean_epoch_validation_loss))
             return True
     
