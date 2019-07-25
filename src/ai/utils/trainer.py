@@ -92,7 +92,7 @@ class Trainer():
         self.epoch_training_loss = []
         self.epoch_validation_loss = []
         
-    def save_model(self, epoch, mean_epoch_validation_loss, input_size, n_lstm_layer, n_hidden_lstm, n_hidden_fc):
+    def save_model(self, epoch, mean_epoch_validation_loss, input_size, n_lstm_layer, n_hidden_lstm, n_hidden_fc, seq_size):
         if mean_epoch_validation_loss < self.lowest_loss:
             self.trials = 0
             self.lowest_loss = mean_epoch_validation_loss
@@ -100,8 +100,8 @@ class Trainer():
                 'model_state_dict': self.model.state_dict(),
                 'optimizer_state_dict': self.optimizer.state_dict(),
                 'loss': mean_epoch_validation_loss
-            }, self.location_model+"_inputS"+str(input_size)+"_Layer"+
-                str(n_lstm_layer)+"_HiddenLstm"+str(n_hidden_lstm)+"_HiddenFc"+str(n_hidden_fc)+".pt")
+            }, self.location_model+"_InputSize"+str(input_size)+"_LayerLstm"+
+                str(n_lstm_layer)+"_HiddenLstm"+str(n_hidden_lstm)+"_HiddenFc"+str(n_hidden_fc)+"_Seq"+seq_size+".pt")
             print("Epoch {}: best model saved with loss: {}".format(epoch, mean_epoch_validation_loss))
             return True
     
