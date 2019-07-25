@@ -57,7 +57,7 @@ class Predictor():
         residuals = pd.DataFrame(columns=self.create_column_names_residuals())
         for i in range(1,len(data.columns)):
             residuals[residuals.columns[i]] = prediction[prediction.columns[i]] - prediction[prediction.columns[i+len(data.columns)-1]]
-        residuals["timestamp"]=data["timestamp"]
+        residuals["timestamp"]=range(prediction.shape[0])
         return residuals
         
     def save_prediction(self, prediction_result):
