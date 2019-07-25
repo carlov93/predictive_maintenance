@@ -3,19 +3,20 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class LstmMse(nn.Module):
-    def __init__(self, batch_size, input_dim, n_hidden, n_layers):
+    def __init__(self, batch_size, input_dim, n_hidden_lstm, n_layers, n_hidden_fc):
         super(LstmMse, self).__init__()
         # Attributes for LSTM Network
         self.input_dim = input_dim
-        self.n_hidden = n_hidden
+        self.n_hidden_lstm = n_hidden_lstm
         self.n_layers = n_layers
         self.batch_size = batch_size
+        self.n_hidden_fc = n_hidden_fc
         
         # Definition of NN layer
         # batch_first = True because dataloader creates batches and batch_size is 0. dimension
-        self.lstm = nn.LSTM(input_size = self.input_dim, hidden_size = self.n_hidden, num_layers = self.n_layers, batch_first = True)
-        self.fc1 = nn.Linear(self.n_hidden, 50)
-        self.fc2 = nn.Linear(50, self.input_dim)
+        self.lstm = nn.LSTM(input_size = self.input_dim, hidden_size = self.n_hidden_lstm, num_layers = self.n_layers, batch_first = True)
+        self.fc1 = nn.Linear(self.n_hidden_lstm, self.n_hidden_fc)
+        self.fc2 = nn.Linear(self.n_hidden_fc, self.input_dim)
         
     def forward(self, input_data, hidden):
         # Forward propagate LSTM
@@ -37,27 +38,28 @@ class LstmMse(nn.Module):
         # This method is for initializing hidden state as well as cell state
         # We need to detach the hidden state to prevent exploding/vanishing gradients
         # The axes semantics are (num_layers, minibatch_size, hidden_dim)
-        h0 = torch.zeros(self.n_layers, self.batch_size, self.n_hidden, requires_grad=False)
-        c0 = torch.zeros(self.n_layers, self.batch_size, self.n_hidden, requires_grad=False)
+        h0 = torch.zeros(self.n_layers, self.batch_size, self.n_hidden_lstm, requires_grad=False)
+        c0 = torch.zeros(self.n_layers, self.batch_size, self.n_hidden_lstm, requires_grad=False)
         return [t for t in (h0, c0)]
 
     
 class LstmMseDropout(nn.Module):
-    def __init__(self, batch_size, input_dim, n_hidden, n_layers, dropout_rate):
+    def __init__(self, batch_size, input_dim, n_hidden_lstm, n_layers, dropout_rate, n_hidden_fc):
         super(LstmMseDropout, self).__init__()
         # Attributes for LSTM Network
         self.input_dim = input_dim
-        self.n_hidden = n_hidden
+        self.n_hidden_lstm = n_hidden_lstm
         self.n_layers = n_layers
         self.batch_size = batch_size
         self.dropout_rate = dropout_rate
+        self.n_hidden_fc = n_hidden_fc
         
         # Definition of NN layer
         # batch_first = True because dataloader creates batches and batch_size is 0. dimension
-        self.lstm = nn.LSTM(input_size = self.input_dim, hidden_size = self.n_hidden, num_layers = self.n_layers, batch_first = True, dropout = self.dropout_rate)
-        self.fc1 = nn.Linear(self.n_hidden, 50)
+        self.lstm = nn.LSTM(input_size = self.input_dim, hidden_size = self.n_hidden_lstm, num_layers = self.n_layers, batch_first = True, dropout = self.dropout_rate)
+        self.fc1 = nn.Linear(self.n_hidden_lstm, self.n_hidden_fc)
         self.dropout = nn.Dropout(p=self.dropout_rate)
-        self.fc2 = nn.Linear(50, self.input_dim)
+        self.fc2 = nn.Linear(self.n_hidden_fc, self.input_dim)
         
     def forward(self, input_data, hidden):
         # Forward propagate LSTM
@@ -80,26 +82,29 @@ class LstmMseDropout(nn.Module):
         # This method is for initializing hidden state as well as cell state
         # We need to detach the hidden state to prevent exploding/vanishing gradients
         # The axes semantics are (num_layers, minibatch_size, hidden_dim)
-        h0 = torch.zeros(self.n_layers, self.batch_size, self.n_hidden, requires_grad=False)
-        c0 = torch.zeros(self.n_layers, self.batch_size, self.n_hidden, requires_grad=False)
+        h0 = torch.zeros(self.n_layers, self.batch_size, self.n_hidden_lstm, requires_grad=False)
+        c0 = torch.zeros(self.n_layers, self.batch_size, self.n_hidden_lstm, requires_grad=False)
         return [t for t in (h0, c0)]
 
     
-class LstmMle(nn.Module):
-    def __init__(self, batch_size, input_dim, n_hidden, n_layers):
+class LstmMleDropout(nn.Module):
+    def __init__(self, batch_size, input_dim, n_hidden_lstm, n_layers, dropout_rate, n_hidden_fc):
         super(LstmMl, self).__init__()
         # Attributes for LSTM Network
         self.input_dim = input_dim
-        self.n_hidden = n_hidden
+        self.n_hidden_lstm = n_hidden
         self.n_layers = n_layers
         self.batch_size = batch_size
+        self.dropout_rate = dropout_rate
+        self.n_hidden_fc = n_hidden_fc
         
         # Definition of NN layer
         # batch_first = True because dataloader creates batches and batch_size is 0. dimension
-        self.lstm = nn.LSTM(input_size = self.input_dim, hidden_size = self.n_hidden, num_layers = self.n_layers, batch_first = True)
-        self.fc1 = nn.Linear(self.n_hidden, 50)
-        self.fc_y_hat = nn.Linear(50, self.input_dim)
-        self.fc_tau = nn.Linear(50, self.input_dim)
+        self.lstm = nn.LSTM(input_size = self.input_dim, hidden_size = self.n_hidden_lstm, num_layers = self.n_layers, batch_first = True, dropout = self.dropout_rate)
+        self.fc1 = nn.Linear(self.n_hidden_lstm, self.n_hidden_fc)
+        self.dropout = nn.Dropout(p=self.dropout_rate)
+        self.fc_y_hat = nn.Linear(self.n_hidden_fc, self.input_dim)
+        self.fc_tau = nn.Linear(self.n_hidden_fc, self.input_dim)
         
     def forward(self, input_data, hidden):
         # Forward propagate LSTM
@@ -113,6 +118,7 @@ class LstmMle(nn.Module):
         # Select the output from the last sequence 
         last_out = lstm_out[:,length_seq-1,:]
         out = self.fc1(last_out)
+        out = self.dropout(out)
         out = F.tanh(out)
         y_hat = self.fc_y_hat(out)
         out_tau = self.fc_tau(out)
@@ -124,7 +130,7 @@ class LstmMle(nn.Module):
         # This method is for initializing hidden state as well as cell state
         # We need to detach the hidden state to prevent exploding/vanishing gradients
         # The axes semantics are (num_layers, minibatch_size, hidden_dim)
-        h0 = torch.zeros(self.n_layers, self.batch_size, self.n_hidden, requires_grad=False)
-        c0 = torch.zeros(self.n_layers, self.batch_size, self.n_hidden, requires_grad=False)
+        h0 = torch.zeros(self.n_layers, self.batch_size, self.n_hidden_lstm, requires_grad=False)
+        c0 = torch.zeros(self.n_layers, self.batch_size, self.n_hidden_lstm, requires_grad=False)
         return [t for t in (h0, c0)]
     

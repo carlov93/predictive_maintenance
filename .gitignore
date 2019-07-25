@@ -1,6 +1,10 @@
 # Don't track content of these folders
 venv_pm/
 data/phm_data_challenge/
+models/
+src/visualisation/files/
+src/visualisation/graphs/
+deprecated/
 
 # Compiled source #
 ###################
