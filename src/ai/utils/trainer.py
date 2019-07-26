@@ -116,5 +116,5 @@ class Trainer():
     
     def save_statistic(self, hist_loss, sequenze_size, n_lstm_layer, n_hidden_lstm, n_hidden_fc, time):
         with open(self.location_stats, 'a') as file:
-            file.write("\n"+str(round(min(hist_loss),2))+";"+str(sequenze_size)+";"+str(n_lstm_layer)+";"+
-            str(n_hidden_lstm)+";"+str(n_hidden_fc)+";"+str(round(time,1)))
+            file.write("\n"+str(round(min(hist_loss),2))+","+str(sequenze_size)+","+str(n_lstm_layer)+","+
+            str(n_hidden_lstm)+","+str(n_hidden_fc)+","+str(round(time,1)))
