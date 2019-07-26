@@ -21,6 +21,13 @@ class LossModuleMse(torch.nn.Module):
         mean_loss = torch.sum(mean_loss) / self.batch_size
         return mean_loss
 
+    def share_per_sensor(self, output, target_data):
+        assert self.batch_size==1,"Batch size has to be 1 for this method"
+        loss_per_sensor = (output - target_data)**2
+        sum_loss = torch.sum((output - target_data)**2, dim=1)
+        result = loss_per_sensor/sum_loss.item()
+        return result
+          
 class LossModuleMle(torch.nn.Module):
     def __init__(self, batch_size):
         """

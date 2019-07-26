@@ -7,14 +7,15 @@ from keras.preprocessing.sequence import TimeseriesGenerator
 import torch
 
 class DataPreperator():
-    def __init__(self, path):
+    def __init__(self, path, first_order_difference=False):
         self.path = path
         self.scaler = StandardScaler()
+        self.first_order_difference = first_order_difference
         
     def load_data(self):
         return pd.read_csv(self.path)
     
-    def preprocess_data(self, train_data, validation_data):
+    def scale_data(self, train_data, validation_data):
         # Remove time feature
         train_data = train_data.drop(labels="timestamp", axis=1)
         validation_data = validation_data.drop(labels="timestamp", axis=1)
@@ -30,10 +31,13 @@ class DataPreperator():
     
     def provide_data(self, stake_training_data):
         dataset = self.load_data()
+        if self.first_order_difference:
+            dataset = dataset.diff(periods=1)
+            dataset = dataset.dropna()
         amount_training_data = round(len(dataset)*stake_training_data)
         train_data = dataset.iloc[0:amount_training_data,:]
         validation_data = dataset.iloc[amount_training_data:,:]
-        train_preprocessed, validation_preporcessed = self.preprocess_data(train_data, validation_data)
+        train_preprocessed, validation_preporcessed = self.scale_data(train_data, validation_data)
         
         return train_preprocessed, validation_preporcessed
 
