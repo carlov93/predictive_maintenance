@@ -42,16 +42,17 @@ class DataPreperator():
         return train_preprocessed, validation_preporcessed
 
 class DataPreperatorPrediction():
-    def __init__(self, path, mean_training_data, var_training_data, input_dim):
+    def __init__(self, path, mean_training_data, var_training_data, input_dim, first_order_difference=False):
         self.path = path
         self.mean_training_data = mean_training_data
         self.var_training_data = var_training_data
         self.input_dim = input_dim
+        self.first_order_difference = first_order_difference
         
     def load_data(self):
         return pd.read_csv(self.path)
     
-    def preprocess_data(self, train_data):
+    def scale_data(self, train_data):
         # Remove time feature
         data = train_data.drop(labels="timestamp", axis=1).values
         
@@ -66,7 +67,10 @@ class DataPreperatorPrediction():
         
     def provide_data(self):
         dataset = self.load_data()
-        preprocessed_data = self.preprocess_data(dataset)
+        if self.first_order_difference:
+            dataset = dataset.diff(periods=1)
+            dataset = dataset.dropna()
+        preprocessed_data = self.scale_data(dataset)
         return preprocessed_data    
 
 class DataSet(Dataset):
