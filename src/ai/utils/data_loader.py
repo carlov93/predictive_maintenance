@@ -7,18 +7,18 @@ from keras.preprocessing.sequence import TimeseriesGenerator
 import torch
 
 class DataPreperator():
-    def __init__(self, path, first_order_difference=False):
+    def __init__(self, path, ignored_features, stake_training_data, first_order_difference=False):
         self.path = path
+        self.dataset = self.load_data()
         self.scaler = StandardScaler()
         self.first_order_difference = first_order_difference
+        self.ignored_features = ignored_features
+        self.stake = stake_training_data
         
     def load_data(self):
         return pd.read_csv(self.path)
     
     def scale_data(self, train_data, validation_data):
-        # Remove time feature
-        train_data = train_data.drop(labels="timestamp", axis=1)
-        validation_data = validation_data.drop(labels="timestamp", axis=1)
         # Initialise standard scaler
         self.scaler.fit(train_data)
         # Transform data
@@ -26,51 +26,63 @@ class DataPreperator():
         validation_scaled = self.scaler.transform(validation_data)
         return train_scaled, validation_scaled
         
+    def drop_features(self):
+        for feature in self.ignored_features:
+            self.dataset = self.dataset.drop(labels=feature, axis=1)
+            
+    def first_order_difference(self):
+        self.dataset = self.dataset.diff(periods=1)
+        self.dataset = self.dataset.dropna()
+        
     def provide_statistics(self):
         return self.scaler.mean_, self.scaler.var_
     
-    def provide_data(self, stake_training_data):
-        dataset = self.load_data()
+    def prepare_data(self):
+        self.drop_features()
         if self.first_order_difference:
-            dataset = dataset.diff(periods=1)
-            dataset = dataset.dropna()
-        amount_training_data = round(len(dataset)*stake_training_data)
-        train_data = dataset.iloc[0:amount_training_data,:]
-        validation_data = dataset.iloc[amount_training_data:,:]
+            self.first_order_difference()
+        amount_training_data = round(len(self.dataset)*self.stake)
+        train_data = self.dataset.iloc[0:amount_training_data,:]
+        validation_data = self.dataset.iloc[amount_training_data:,:]
         train_preprocessed, validation_preporcessed = self.scale_data(train_data, validation_data)
-        
         return train_preprocessed, validation_preporcessed
 
 class DataPreperatorPrediction():
-    def __init__(self, path, mean_training_data, var_training_data, input_dim, first_order_difference=False):
+    def __init__(self, path, ignored_features, mean_training_data, var_training_data, first_order_difference=False):
         self.path = path
+        self.dataset = self.load_data()
         self.mean_training_data = mean_training_data
         self.var_training_data = var_training_data
-        self.input_dim = input_dim
         self.first_order_difference = first_order_difference
+        self.ignored_features = ignored_features
         
     def load_data(self):
         return pd.read_csv(self.path)
     
-    def scale_data(self, train_data):
-        # Remove time feature
-        data = train_data.drop(labels="timestamp", axis=1).values
-        
+    def drop_features(self):
+        for feature in self.ignored_features:
+            self.dataset = self.dataset.drop(labels=feature, axis=1)
+            
+    def first_order_difference(self):
+        self.dataset = self.dataset.diff(periods=1)
+        self.dataset = self.dataset.dropna()
+    
+    def scale_data(self):
+        data_numpy = self.dataset.values
         # Transform data for prediction with mean and variance of training data
-        train_scaled = np.zeros(shape=(len(data[:,0]),self.input_dim))
+        train_scaled = np.zeros(shape=(len(data_numpy[:,0]), data_numpy.shape[1]))
         i = 0
         for mean, var in zip(self.mean_training_data, self.var_training_data):
-            train_scaled[:,i] = np.subtract(data[:,i], mean)
+            train_scaled[:,i] = np.subtract(data_numpy[:,i], mean)
             train_scaled[:,i] = np.divide(train_scaled[:,i], np.sqrt(var))
             i +=1
         return train_scaled
         
-    def provide_data(self):
-        dataset = self.load_data()
+    def prepare_data(self):
+        self.drop_features()
         if self.first_order_difference:
-            dataset = dataset.diff(periods=1)
-            dataset = dataset.dropna()
-        preprocessed_data = self.scale_data(dataset)
+            self.first_order_difference()
+        preprocessed_data = self.scale_data()
         return preprocessed_data    
 
 class DataSet(Dataset):
