@@ -6,11 +6,12 @@ import numpy as np
 import builtins
 
 class Trainer():
-    def __init__(self, model, optimizer, scheduler, criterion, patience, location_model, location_stats):
+    def __init__(self, model, optimizer, scheduler, scheduler_active, criterion, patience, location_model, location_stats):
         self.model = model
         # lr=1. because of scheduler (1*learning_rate_schedular)
         self.optimizer = optimizer
         self.scheduler = scheduler
+        self.scheduler_active = scheduler_active
         # initialize further variables
         self.criterion = criterion
         self.epoch_training_loss = []
@@ -51,9 +52,9 @@ class Trainer():
             # Update parameters
             self.optimizer.step()
 
-            # Update LR
-            self.scheduler.step()
-            # lr_step = self.optimizer.state_dict()["param_groups"][0]["lr"]
+            # Update LR if scheduler is active 
+            if self.scheduler_active:
+                self.scheduler.step()
             
         # Return mean of loss over all training iterations
         return sum(self.epoch_training_loss) / float(len(self.epoch_training_loss))
