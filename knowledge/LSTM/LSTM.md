@@ -14,7 +14,6 @@ In the case of an LSTM, for each element in the sequence, there is a correspondi
 - For long sequences, it would probably be computationally infeasible and you'd get overfitting. 
 - Interestingly, RNNs can still learn temporal structure that extends beyond the truncation length, because the recurrent units can store memory from before.
 
-
 ## Gates of LSTM:
 Gates = neural network which decise wheter information pass a gate or not. Gates in LSTM are the sigmoid activation functions because we want a gate to give only positive values and should be able to give us a clear cut answer whether, we need to keep a particular feature (1) or we need to discard that feature (0). <br>
 LSTM will have 3 gates:
@@ -42,6 +41,10 @@ Batch - The batch size defines the number of samples that will be propagated thr
 Sequence - This is equivalent to the amount of time steps you run your recurrent neural network. If you want your network to have memory of 60 time steps, this number should be 60.
 
 Feature - this is the amount of features in every time step. If you are processing pictures, this is the amount of pixels.
+
+## Difference between Hidden State and Cell State
+Source: <br>
+- https://www.quora.com/How-is-the-hidden-state-h-different-from-the-memory-c-in-an-LSTM-cell
 
 
 ## Types of LSTM models
