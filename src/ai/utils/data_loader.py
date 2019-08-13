@@ -7,28 +7,46 @@ from keras.preprocessing.sequence import TimeseriesGenerator
 import torch
 
 class DataPreperator():
-    def __init__(self, path, ignored_features, stake_training_data, first_order_difference=False):
+    def __init__(self, path, ignored_features, stake_training_data, features_not_to_scale, first_order_difference=False):
         self.path = path
         self.dataset = self.load_data()
         self.scaler = StandardScaler()
         self.first_order_difference = first_order_difference
         self.ignored_features = ignored_features
+        self.features_not_to_scale = features_not_to_scale
         self.stake = stake_training_data
         
     def load_data(self):
         return pd.read_csv(self.path)
     
     def scale_data(self, train_data, validation_data):
-        # Initialise standard scaler
-        self.scaler.fit(train_data)
-        # Transform data
-        train_scaled = self.scaler.transform(train_data)
-        validation_scaled = self.scaler.transform(validation_data)
+        if len(self.features_not_to_scale) == 0:
+            # Initialise standard scaler
+            self.scaler.fit(train_data)
+            # Transform data
+            train_scaled = self.scaler.transform(train_data)
+            validation_scaled = self.scaler.transform(validation_data)
+        
+        else:
+            # seperate categorical and continous features
+            categorical_features_train = train_data.loc[:, self.features_not_to_scale]
+            continous_features_train = train_data.drop(labels=self.features_not_to_scale, axis=1)
+            categorical_features_validation = validation_data.loc[:, self.features_not_to_scale]
+            continous_features_validation = validation_data.drop(labels=self.features_not_to_scale, axis=1)
+
+            # Initialise standard scaler
+            self.scaler.fit(continous_features_train)
+            # Transform data
+            continous_train_scaled = self.scaler.transform(continous_features_train)
+            continous_validation_scaled = self.scaler.transform(continous_features_validation)
+
+            # Combine categorical and scaled features 
+            train_scaled = np.concatenate((continous_train_scaled, categorical_features_train), axis=1)
+            validation_scaled = np.concatenate((continous_validation_scaled, categorical_features_validation), axis=1)
         return train_scaled, validation_scaled
         
     def drop_features(self):
-        for feature in self.ignored_features:
-            self.dataset = self.dataset.drop(labels=feature, axis=1)
+        self.dataset = self.dataset.drop(labels=self.ignored_features, axis=1)
             
     def first_order_difference(self):
         self.dataset = self.dataset.diff(periods=1)
