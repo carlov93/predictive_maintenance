@@ -1,8 +1,13 @@
-#!/bin/bash
+# navigate to project root directory
+<>
+
 # create virtual environment
-cd ..
-python3 -m venv venvMasterarbeit
-source venvMasterarbeit/bin/activate
+python3 -m venv venvMasterarbeitVoss
+
+# activate virtual environment
+source venvMasterarbeitVoss/bin/activate
+
+# install ipykernel to add virtual environment to jupyter lab
 pip install ipykernel
 ipython kernel install --user --name=masterarbeit
 
