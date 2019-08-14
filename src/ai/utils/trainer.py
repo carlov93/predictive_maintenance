@@ -61,27 +61,29 @@ class Trainer():
     
     def evaluate(self, data_loader_validation, hist_loss, epoch):
         for batch_number, data in enumerate(data_loader_validation):
-            input_data, target_data = data
-            self.model.eval()
-            hidden = self.model.init_hidden()
-            output = self.model(input_data, hidden)
+            with torch.no_grad():
+                input_data, target_data = data
+                self.model.eval()
+                hidden = self.model.init_hidden()
+                output = self.model(input_data, hidden)
 
-            # Calculate loss
-            loss = self.criterion(output, target_data)
-            self.epoch_validation_loss.append(loss.item())
+                # Calculate loss
+                loss = self.criterion(output, target_data)
+                self.epoch_validation_loss.append(loss.item())
             
         # Return mean of loss over all validation iterations
         return sum(self.epoch_validation_loss) / float(len(self.epoch_validation_loss))
             
     def cache_history_training(self, hist_loss, epoch, mean_epoch_training_loss, mean_epoch_validation_loss):
         # Save training and validation loss to history
+        history = {'epoch': epoch, 'training': mean_epoch_training_loss, 'validation': mean_epoch_validation_loss}
+        hist_loss.append(history)     
         print("-------- epoch_no. {} finished with eval loss {}--------".format(epoch, mean_epoch_validation_loss))
-        return {'epoch': epoch, 'training': mean_epoch_training_loss, 'validation': mean_epoch_validation_loss}
             
         # Empty list for new epoch 
         self.epoch_training_loss = []
         self.epoch_validation_loss = []
-        
+                
     def save_model(self, epoch, mean_epoch_validation_loss, input_size, n_lstm_layer, n_hidden_lstm, n_hidden_fc, seq_size):
         if mean_epoch_validation_loss < self.lowest_loss:
             self.trials = 0
@@ -167,18 +169,19 @@ class TrainerMultiTaskLearning():
     
     def evaluate(self, data_loader_validation, hist_loss, epoch):
         for batch_number, data in enumerate(data_loader_validation):
-            input_data, target_data = data
-            self.model.eval()
-            hidden = self.model.init_hidden()
-            
-            # Forward propagation
-            prediction, _ = self.model(input_data, hidden)
+            with torch.no_grad():
+                input_data, target_data = data
+                self.model.eval()
+                hidden = self.model.init_hidden()
 
-            # Calculate loss
-            l1 = self.criterion(prediction, target_data)   
-            l2 = self.criterion(_, target_data)
-            loss =  (l1 + l2)/2
-            self.epoch_validation_loss.append(loss.item())
+                # Forward propagation
+                prediction, _ = self.model(input_data, hidden)
+
+                # Calculate loss
+                l1 = self.criterion(prediction, target_data)   
+                l2 = self.criterion(_, target_data)
+                loss =  (l1 + l2)/2
+                self.epoch_validation_loss.append(loss.item())
             
         # Return mean of loss over all validation iterations
         return sum(self.epoch_validation_loss) / float(len(self.epoch_validation_loss))

@@ -140,4 +140,75 @@ class PredictorMle():
                     
             print("Finished predicting")                      
         return prediction
+
+    
+class PredictorMultiTaskLearning():
+    def __init__(self, model, criterion, path_data, columns_to_ignore):
+        self.model = model
+        self.criterion = criterion
+        self.path_data = path_data
+        self.column_names_data = self.get_column_names_data()
+        self.columns_to_ignore = columns_to_ignore
+
+    def get_column_names_data(self):
+        with open(self.path_data, 'r') as f:
+            header = f.readline().replace('\n','')
+            return header.split(",")
+        
+    def create_column_names_result(self):
+        column_names_target = [column_name+" target" for column_name in self.column_names_data if column_name not in self.columns_to_ignore+["ID"]]
+        column_names_predicted = [column_name+" predicted" for column_name in self.column_names_data if column_name not in self.columns_to_ignore+["ID"]]
+        column_names_loss_per_sensor = [column_name+" share of loss " for column_name in self.column_names_data if column_name not in self.columns_to_ignore+["ID"]]
+        column_names_residuals= ["residual "+column_name for column_name in self.column_names_data if column_name not in self.columns_to_ignore+["ID"]]
+        column_names_latent_space= ["latent_space_"+str(i) for i in range(self.model.n_hidden_fc_ls_analysis)]
+        return ["ID"] + column_names_target + column_names_predicted + ["loss"] + column_names_loss_per_sensor + column_names_residuals + column_names_latent_space
+          
+    def predict(self, data_loader):
+        prediction = pd.DataFrame(columns=self.create_column_names_result())
+        self.model.eval()
+        with torch.no_grad():
+            print("Start predicting.")
+            for batch_number, data in enumerate(data_loader):
+                input_data, target_data = data
+                
+                # Store ID of target sample 
+                id_target = int(target_data[:,0].item())   #ID must be on first position!
+                
+                # De-select ID feature in both input_data and target data for inference
+                input_data = torch.from_numpy(input_data.numpy()[:,:,1:])   # ID must be on first position!
+                target_data = torch.from_numpy(target_data.numpy()[:,1:])   # ID must be on first position!
+
+                # Initilize Hidden and Cell State
+                hidden = self.model.init_hidden()
+
+                # Forward propagation
+                prediction, _ = self.model(input_data, hidden)
+                
+                latent_space = self.model.current_latent_space
+            
+                # Calculate loss (subnetwork for latent space analysis not longer considered)
+                loss_prediction_network = self.criterion(prediction, target_data)   
+                self.epoch_training_loss.append(loss_prediction_network.item())
+                
+                # Reshape and Calculate prediction metrics
+                output = torch.squeeze(prediction)
+                predicted_data = output.data.numpy().tolist()
+                target_data = torch.squeeze(target_data)
+                target_data = target_data.data.numpy().tolist()
+                loss_share_per_sensor = torch.squeeze(loss_share_per_sensor)
+                loss_share_per_sensor = loss_share_per_sensor.data.numpy().tolist()
+                residuals = [target_i - prediction_i for target_i, prediction_i in zip(target_data, predicted_data)]
+                latent_space = torch.squeeze(latent_space)
+                latent_space = latent_space.data.numpy().tolist()
+                
+                # Add values to dataframe
+                data = [id_target] + target_data + predicted_data + [loss.item()] + loss_share_per_sensor + residuals + latent_space
+                prediction = prediction.append(pd.Series(data, index=prediction.columns), ignore_index=True)
+                
+                # Print status
+                if id_target%5000 == 0:
+                    print("Current status: " + str(id_target) + " samples are predicted.")
+                
+            print("Finished predicting.")                      
+        return prediction
     

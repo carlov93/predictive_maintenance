@@ -3,19 +3,14 @@ import torch.nn as nn
 import torch.nn.functional as F
 import csv
 
-class AnalyseLayer(nn.Module):
+class AnalysisLayer(nn.Module):
     def __init__(self, file_location):
-        super(AnalyseLayer, self).__init__()
+        super(AnalysisLayer, self).__init__()
         self.file_location = file_location
     
     def forward(self, x):
-        #print(x)
-        if x.size()[0]==1:
-            latent_space = torch.squeeze(x)
-            latent_space = latent_space.data.numpy().tolist()
-            with open(self.file_location,'wb') as resultFile:
-                wr = csv.writer(resultFile, dialect='excel')
-                wr.writerows(latent_space)
+        global latent_space
+        latent_space = x.item()
         return x
 
 class LstmMse(nn.Module):
@@ -123,8 +118,7 @@ class LstmMle(nn.Module):
     
 class LstmMultiTaskLearning(nn.Module):
     def __init__(self, batch_size, input_dim, n_hidden_lstm, n_layers, 
-                 dropout_rate, n_hidden_fc_prediction, 
-                 n_hidden_fc_ls_analysis, file_location_latent_space):
+                 dropout_rate, n_hidden_fc_prediction, n_hidden_fc_ls_analysis):
         super(LstmMultiTaskLearning, self).__init__()
         # Attributes for LSTM Network
         self.input_dim = input_dim
@@ -134,7 +128,7 @@ class LstmMultiTaskLearning(nn.Module):
         self.dropout_rate = dropout_rate
         self.n_hidden_fc_prediction = n_hidden_fc_prediction
         self.n_hidden_fc_ls_analysis = n_hidden_fc_ls_analysis
-        self.file_location_ls = file_location_latent_space
+        self.current_latent_space = None
         
         # define strcture of model
         self.sharedlayer = nn.LSTM(input_size = self.input_dim, 
@@ -152,7 +146,7 @@ class LstmMultiTaskLearning(nn.Module):
         self.latent_space_analyse_network = nn.Sequential(nn.Linear(self.n_hidden_lstm, self.n_hidden_fc_ls_analysis),
                                                           nn.Dropout(p=self.dropout_rate),
                                                           nn.Tanh(),
-                                                          AnalyseLayer(self.file_location_ls),
+                                                          AnalysisLayer(self.file_location_ls),
                                                           nn.Linear(self.n_hidden_fc_ls_analysis, self.input_dim)
                                                           )        
 
@@ -172,9 +166,12 @@ class LstmMultiTaskLearning(nn.Module):
         # Define forward pass through both sub-networks
         prediction = self.prediction_network(last_out)
         _ = self.latent_space_analyse_network(last_out)
+        
+        # Save latent space
+        self.current_latent_space = latent_space
+        
         return prediction, _
         
-    
     def init_hidden(self):
         # This method is for initializing hidden state as well as cell state
         # We need to detach the hidden state to prevent exploding/vanishing gradients
