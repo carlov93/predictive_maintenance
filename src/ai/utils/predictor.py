@@ -183,7 +183,6 @@ class PredictorMultiTaskLearning():
 
                 # Forward propagation
                 prediction, _ = self.model(input_data, hidden)
-                
                 latent_space = self.model.current_latent_space
             
                 # Calculate loss (subnetwork for latent space analysis not longer considered)
