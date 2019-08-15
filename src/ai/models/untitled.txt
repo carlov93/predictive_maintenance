@@ -1,0 +1,9 @@
+res5c_output = None
+
+def res5c_hook(module, input_, output):
+    nonlocal res5c_output
+    res5c_output = output
+
+resnet.layer4.register_forward_hook(res5c_hook)
+
+resnet(some_input)
