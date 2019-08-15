@@ -23,7 +23,6 @@ class Trainer():
         self.location_stats = location_stats
     
     def train(self, data_loader_training):
-        print("Start training.")
         for batch_number, data in enumerate(data_loader_training):
             # The LSTM has to be reinitialised, otherwise the LSTM will treat a new batch 
             # as a continuation of a sequence. When batches of data are independent sequences, 
@@ -130,7 +129,6 @@ class TrainerMultiTaskLearning():
         self.location_stats = location_stats
     
     def train(self, data_loader_training):                    
-        print("Start training.")
         for batch_number, data in enumerate(data_loader_training):
             # The LSTM has to be reinitialised, otherwise the LSTM will treat a new batch 
             # as a continuation of a sequence. When batches of data are independent sequences, 
