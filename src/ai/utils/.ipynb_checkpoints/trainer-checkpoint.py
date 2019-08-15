@@ -1,34 +1,29 @@
 import torch
 import torch.nn as nn
-from torch.nn.utils import clip_grad_norm_
-from torch.utils.data import DataLoader
 import torch.optim as optim
 import pandas as pd
 import numpy as np
+import builtins
 
-# own Modules 
-from models import LstmMse
-
-class Trainer(batch_size, input_dim, n_hidden, n_layers, base_lr, max_lr, 
-              step_size_up, mode, gamma, criterion, location_model, location_stats, patience, epoch):
-    def __init__(self):
-        # initialize model, opitimizer, scheduler 
-        self.model = LstmMse(batch_size, input_dim, n_hidden, n_layers)
-        self.optimizer = torch.optim.SGD(self.model.parameters(), lr=1.) 
-        self.scheduler = torch.optim.lr_scheduler.CyclicLR(optimizer=self.optimizer, base_lr, 
-                                                           max_lr, step_size_up, mode, gamma)
+class Trainer():
+    def __init__(self, model, optimizer, scheduler, scheduler_active, criterion, patience, location_model, location_stats):
+        self.model = model
+        # lr=1. because of scheduler (1*learning_rate_schedular)
+        self.optimizer = optimizer
+        self.scheduler = scheduler
+        self.scheduler_active = scheduler_active
         # initialize further variables
         self.criterion = criterion
         self.epoch_training_loss = []
-        self.epoch_validation_loss []
+        self.epoch_validation_loss = []
         self.lowest_loss = 99
         self.trails = 0
+        self.patience = patience
         self.location_model = location_model
         self.location_stats = location_stats
-        self.patience = patience
-        self.epoch = epoch
     
     def train(self, data_loader_training):
+        print("Start training.")
         for batch_number, data in enumerate(data_loader_training):
             # The LSTM has to be reinitialised, otherwise the LSTM will treat a new batch 
             # as a continuation of a sequence. When batches of data are independent sequences, 
@@ -58,35 +53,49 @@ class Trainer(batch_size, input_dim, n_hidden, n_layers, base_lr, max_lr,
             # Update parameters
             self.optimizer.step()
 
-            # Update LR
-            self.scheduler.step()
-            # lr_step = self.optimizer.state_dict()["param_groups"][0]["lr"]
+            # Update LR if scheduler is active 
+            if self.scheduler_active:
+                self.scheduler.step()
+            
+        # Return mean of loss over all training iterations
+        return sum(self.epoch_training_loss) / float(len(self.epoch_training_loss))
     
-    def evaluate(self, data_loader_validation):
+    def evaluate(self, data_loader_validation, hist_loss, epoch):
         for batch_number, data in enumerate(data_loader_validation):
-            input_data, target_data = data
-            self.model.eval()
-            hidden = self.model.init_hidden()
-            output = self.model(input_data, hidden)
+            with torch.no_grad():
+                input_data, target_data = data
+                self.model.eval()
+                hidden = self.model.init_hidden()
+                output = self.model(input_data, hidden)
 
-            # Calculate loss
-            loss = self.criterion(output, target_data)
-            self.epoch_validation_loss.append(loss.item())
-            mean_epoch_validation_loss = sum(self.epoch_validation_loss) / float(len(self.epoch_validation_loss))
-            print("-------- epoch_no. {} finished with eval loss {}--------".format(self.epoch, mean_epoch_validation_loss))
-            return mean_epoch_validation_loss
-       
-    def save_model(self, mean_epoch_validation_loss):
+                # Calculate loss
+                loss = self.criterion(output, target_data)
+                self.epoch_validation_loss.append(loss.item())
+            
+        # Return mean of loss over all validation iterations
+        return sum(self.epoch_validation_loss) / float(len(self.epoch_validation_loss))
+            
+    def cache_history_training(self, hist_loss, epoch, mean_epoch_training_loss, mean_epoch_validation_loss):
+        # Save training and validation loss to history
+        history = {'epoch': epoch, 'training': mean_epoch_training_loss, 'validation': mean_epoch_validation_loss}
+        hist_loss.append(history)     
+        print("-------- epoch_no. {} finished with eval loss {}--------".format(epoch, mean_epoch_validation_loss))
+            
+        # Empty list for new epoch 
+        self.epoch_training_loss = []
+        self.epoch_validation_loss = []
+                
+    def save_model(self, epoch, mean_epoch_validation_loss, input_size, n_lstm_layer, n_hidden_lstm, n_hidden_fc, seq_size):
         if mean_epoch_validation_loss < self.lowest_loss:
             self.trials = 0
             self.lowest_loss = mean_epoch_validation_loss
             torch.save({
-                'epoch': self.epoch,
                 'model_state_dict': self.model.state_dict(),
                 'optimizer_state_dict': self.optimizer.state_dict(),
                 'loss': mean_epoch_validation_loss
-            }, self.location_model)
-            print("Epoch {}: best model saved with loss: {}".format(self.epoch, mean_epoch_validation_loss))
+            }, self.location_model+"_InputSize"+str(input_size)+"_LayerLstm"+
+                str(n_lstm_layer)+"_HiddenLstm"+str(n_hidden_lstm)+"_HiddenFc"+str(n_hidden_fc)+"_Seq"+str(seq_size)+".pt")
+            print("Epoch {}: best model saved with loss: {}".format(epoch, mean_epoch_validation_loss))
             return True
     
         # Else: Increase trails by one and start new epoch as long as not too many epochs 
@@ -94,11 +103,125 @@ class Trainer(batch_size, input_dim, n_hidden, n_layers, base_lr, max_lr,
         else:
             self.trials += 1
             if self.trials >= self.patience :
-                print(f'Early stopping on epoch {epoch}')
+                print("Early stopping on epoch {}".format(epoch))
                 return False
             return True
     
-    def save_statistic(self, hist_loss):
-        df = pd.DataFrame(hist_loss)
-        df.to_csv(self.location_stats, sep=";", index=False)
+    def save_statistic(self, hist_loss, sequenze_size, n_lstm_layer, n_hidden_lstm, n_hidden_fc, time):
+        with open(self.location_stats, 'a') as file:
+            file.write("\n"+str(round(min(hist_loss),2))+","+str(sequenze_size)+","+str(n_lstm_layer)+","+
+            str(n_hidden_lstm)+","+str(n_hidden_fc)+","+str(round(time,1)))
+
+class TrainerMultiTaskLearning():
+    def __init__(self, model, optimizer, scheduler, scheduler_active, criterion, patience, location_model, location_stats):
+        self.model = model
+        # lr=1. because of scheduler (1*learning_rate_schedular)
+        self.optimizer = optimizer
+        self.scheduler = scheduler
+        self.scheduler_active = scheduler_active
+        # initialize further variables
+        self.criterion = criterion
+        self.epoch_training_loss = []
+        self.epoch_validation_loss = []
+        self.lowest_loss = 99
+        self.trails = 0
+        self.patience = patience
+        self.location_model = location_model
+        self.location_stats = location_stats
+    
+    def train(self, data_loader_training):                    
+        print("Start training.")
+        for batch_number, data in enumerate(data_loader_training):
+            # The LSTM has to be reinitialised, otherwise the LSTM will treat a new batch 
+            # as a continuation of a sequence. When batches of data are independent sequences, 
+            # then you should reinitialise the hidden state before each batch. 
+            # But if your data is made up of really long sequences and you cut it up into batches 
+            # making sure that each batch follows on from the previous batch, then in that case 
+            # you wouldn’t reinitialise the hidden state before each batch.
+            # In the current workflow of class DataProvoider independent sequences are returned. 
+            input_data, target_data = data
+            
+            self.model.train()
+            hidden = self.model.init_hidden()
+
+            # Zero out gradient, else they will accumulate between minibatches
+            self.optimizer.zero_grad()
+
+            # Forward propagation
+            prediction, _ = self.model(input_data, hidden)
+            
+            # Calculate loss
+            l1 = self.criterion(prediction, target_data)   
+            l2 = self.criterion(_, target_data)
+            loss =  (l1 + l2)/2
+            self.epoch_training_loss.append(loss.item())
+
+            # Backward pass
+            loss.backward()
+
+            # Update parameters
+            self.optimizer.step()
+
+            # Update LR if scheduler is active 
+            if self.scheduler_active:
+                self.scheduler.step()
+            
+        # Return mean of loss over all training iterations
+        return sum(self.epoch_training_loss) / float(len(self.epoch_training_loss))
+    
+    def evaluate(self, data_loader_validation, hist_loss, epoch):
+        for batch_number, data in enumerate(data_loader_validation):
+            with torch.no_grad():
+                input_data, target_data = data
+                self.model.eval()
+                hidden = self.model.init_hidden()
+
+                # Forward propagation
+                prediction, _ = self.model(input_data, hidden)
+
+                # Calculate loss
+                l1 = self.criterion(prediction, target_data)   
+                l2 = self.criterion(_, target_data)
+                loss =  (l1 + l2)/2
+                self.epoch_validation_loss.append(loss.item())
+            
+        # Return mean of loss over all validation iterations
+        return sum(self.epoch_validation_loss) / float(len(self.epoch_validation_loss))
+            
+    def cache_history_training(self, hist_loss, epoch, mean_epoch_training_loss, mean_epoch_validation_loss):
+        # Save training and validation loss to history
+        print("-------- epoch_no. {} finished with eval loss {}--------".format(epoch, mean_epoch_validation_loss))
+        return {'epoch': epoch, 'training': mean_epoch_training_loss, 'validation': mean_epoch_validation_loss}
+            
+        # Empty list for new epoch 
+        self.epoch_training_loss = []
+        self.epoch_validation_loss = []
         
+    def save_model(self, epoch, mean_epoch_validation_loss, input_size, 
+                   n_lstm_layer, n_hidden_lstm, n_hidden_fc_pred, seq_size, n_hidden_fc_ls):
+        if mean_epoch_validation_loss < self.lowest_loss:
+            self.trials = 0
+            self.lowest_loss = mean_epoch_validation_loss
+            torch.save({
+                'model_state_dict': self.model.state_dict(),
+                'optimizer_state_dict': self.optimizer.state_dict(),
+                'loss': mean_epoch_validation_loss
+            }, self.location_model+"_InputSize"+str(input_size)+"_LayerLstm"+
+                str(n_lstm_layer)+"_HiddenLstm"+str(n_hidden_lstm)+"_HiddenFc_pred"+
+                str(n_hidden_fc_pred)+"_HiddenFc_ls"+str(n_hidden_fc_ls)+"_Seq"+str(seq_size)+".pt")
+            print("Epoch {}: best model saved with loss: {}".format(epoch, mean_epoch_validation_loss))
+            return True
+    
+        # Else: Increase trails by one and start new epoch as long as not too many epochs 
+        # were unsuccessful (controlled by patience)
+        else:
+            self.trials += 1
+            if self.trials >= self.patience :
+                print("Early stopping on epoch {}".format(epoch))
+                return False
+            return True
+    
+    def save_statistic(self, hist_loss, sequenze_size, n_lstm_layer, n_hidden_lstm, n_hidden_fc, time):
+        with open(self.location_stats, 'a') as file:
+            file.write("\n"+str(round(min(hist_loss),2))+","+str(sequenze_size)+","+str(n_lstm_layer)+","+
+            str(n_hidden_lstm)+","+str(n_hidden_fc)+","+str(round(time,1))) 
