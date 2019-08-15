@@ -33,6 +33,8 @@ class Trainer():
             # In the current workflow of class DataProvoider independent sequences are returned. 
             input_data, target_data = data
             
+            print("Start training.")
+            
             self.model.train()
             hidden = self.model.init_hidden()
 
@@ -138,6 +140,8 @@ class TrainerMultiTaskLearning():
             # you wouldn’t reinitialise the hidden state before each batch.
             # In the current workflow of class DataProvoider independent sequences are returned. 
             input_data, target_data = data
+            
+            print("Start training.")
             
             self.model.train()
             hidden = self.model.init_hidden()

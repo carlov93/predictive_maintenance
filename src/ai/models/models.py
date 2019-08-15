@@ -4,13 +4,12 @@ import torch.nn.functional as F
 import csv
 
 class AnalysisLayer(nn.Module):
-    def __init__(self, file_location):
+    def __init__(self):
         super(AnalysisLayer, self).__init__()
-        self.file_location = file_location
     
     def forward(self, x):
         global latent_space
-        latent_space = x.item()
+        latent_space = x.detach()
         return x
 
 class LstmMse(nn.Module):
@@ -146,7 +145,7 @@ class LstmMultiTaskLearning(nn.Module):
         self.latent_space_analyse_network = nn.Sequential(nn.Linear(self.n_hidden_lstm, self.n_hidden_fc_ls_analysis),
                                                           nn.Dropout(p=self.dropout_rate),
                                                           nn.Tanh(),
-                                                          AnalysisLayer(self.file_location_ls),
+                                                          AnalysisLayer(),
                                                           nn.Linear(self.n_hidden_fc_ls_analysis, self.input_dim)
                                                           )        
 
