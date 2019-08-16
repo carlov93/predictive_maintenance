@@ -93,7 +93,7 @@ class DataPreperatorPrediction():
         # Copy ID of each sample
         train_scaled[:,0]=data_numpy[:,0]
         
-        i = 1   # because first feature is ID
+        i = 1   # because first (i=0) feature is ID
         for mean, var in zip(self.mean_training_data, self.var_training_data):
             train_scaled[:,i] = np.subtract(data_numpy[:,i], mean)
             train_scaled[:,i] = np.divide(train_scaled[:,i], np.sqrt(var))
