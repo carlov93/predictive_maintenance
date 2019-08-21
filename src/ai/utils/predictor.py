@@ -140,12 +140,13 @@ class PredictorMle():
             return results
 
 class PredictorMultiTaskLearning():
-    def __init__(self, model, criterion, path_data, columns_to_ignore):
+    def __init__(self, model, criterion, path_data, columns_to_ignore, threshold_anomaly):
         self.model = model
         self.criterion = criterion
         self.path_data = path_data
         self.column_names_data = self.get_column_names_data()
         self.columns_to_ignore = columns_to_ignore
+        self.threshold_anomaly = threshold_anomaly
 
     def get_column_names_data(self):
         with open(self.path_data, 'r') as f:
@@ -153,12 +154,19 @@ class PredictorMultiTaskLearning():
             return header.split(",")
 
     def create_column_names_result(self):
-        column_names_target = [column_name+" target" for column_name in self.column_names_data if column_name not in self.columns_to_ignore+["ID"]]
-        column_names_predicted = [column_name+" predicted" for column_name in self.column_names_data if column_name not in self.columns_to_ignore+["ID"]]
-        column_names_loss_per_sensor = [column_name+" share of loss " for column_name in self.column_names_data if column_name not in self.columns_to_ignore+["ID"]]
-        column_names_residuals= ["residual "+column_name for column_name in self.column_names_data if column_name not in self.columns_to_ignore+["ID"]]
+        column_names_target = [column_name+" target" for column_name in self.column_names_data 
+                               if column_name not in self.columns_to_ignore+["ID"]]
+        column_names_predicted = [column_name+" predicted" for column_name in self.column_names_data 
+                                  if column_name not in self.columns_to_ignore+["ID"]]
+        column_names_loss_per_sensor = [column_name+" share of loss " for column_name in self.column_names_data 
+                                        if column_name not in self.columns_to_ignore+["ID"]]
+        column_names_residuals= ["residual "+column_name for column_name in self.column_names_data 
+                                 if column_name not in self.columns_to_ignore+["ID"]]
         column_names_latent_space= ["latent_space_"+str(i) for i in range(self.model.n_hidden_fc_ls_analysis)]
-        return ["ID"] + column_names_target + column_names_predicted + ["loss"] + column_names_loss_per_sensor + column_names_residuals + column_names_latent_space
+        
+        column_names = ["ID"] + column_names_target + column_names_predicted + ["loss"] + \
+                       column_names_loss_per_sensor + column_names_residuals + column_names_latent_space
+        return column_names
     
     def predict(self, data_loader):
         results = pd.DataFrame(columns=self.create_column_names_result())
@@ -183,19 +191,20 @@ class PredictorMultiTaskLearning():
                 latent_space = self.model.current_latent_space
 
                 # Calculate loss (subnetwork for latent space analysis not longer considered)
-                loss_prediction_network = self.criterion(prediction, target_data)   
+                loss_prediction_network = self.criterion(prediction, target_data) 
                 loss_share_per_sensor = self.criterion.share_per_sensor(prediction, target_data)
-                
+                    
                 for batch in range(self.model.batch_size):
                     # Reshape and Calculate prediction metrics
                     predicted_data = prediction[batch,:].data.numpy().tolist()
                     ground_truth = target_data[batch,:].data.numpy().tolist()
-                    loss_share_per_sensor_np = loss_share_per_sensor[batch,:].data.numpy().tolist()
                     residuals = [target_i - prediction_i for target_i, prediction_i in zip(ground_truth, predicted_data)]
                     latent_space_np = latent_space[batch,:].data.numpy().tolist()
+                    loss = loss_prediction_network[batch].item()
+                    loss_share_per_sensor_np = loss_share_per_sensor[batch,:].data.numpy().tolist()
                     
                     # Add values to dataframe
-                    data = [id_target[batch].item()] + ground_truth + predicted_data + [loss_prediction_network[batch].item()] + loss_share_per_sensor_np + residuals + latent_space_np
+                    data = [id_target[batch].item()] + ground_truth + predicted_data + [loss] + loss_share_per_sensor_np + residuals + latent_space_np
                     results = results.append(pd.Series(data, index=results.columns), ignore_index=True)
                     
                 # Print status 
@@ -204,3 +213,18 @@ class PredictorMultiTaskLearning():
                         
             print("Finished predicting.")
             return results
+        
+    def detect_anomaly(self, results_prediction, smooth_rate):
+        # smooth loss to 
+        smoothed_loss = []
+        for i,value in enumerate(results_prediction.loc[:,"loss"]):
+            if i==0:
+                smoothed_loss.append(value)
+            else:
+                x = smooth_rate  * value + (1 - smooth_rate) * smoothed_loss[-1]
+                smoothed_loss.append(x)
+        results_prediction["smoothed_loss"]=smoothed_loss
+        
+        # tag sample as an anomaly (1) if loss is higher than given threshold, otherwhise 0 
+        results_prediction["anomaly"] = np.where(results_prediction["smoothed_loss"]>=self.threshold_anomaly, 1, 0)
+        return results_prediction
