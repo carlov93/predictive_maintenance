@@ -17,7 +17,7 @@ class Trainer():
         self.epoch_training_loss = []
         self.epoch_validation_loss = []
         self.lowest_loss = 99
-        self.trails = 0
+        self.trials = 0
         self.patience = patience
         self.location_model = location_model
         self.location_stats = location_stats
@@ -108,8 +108,8 @@ class Trainer():
     
     def save_statistic(self, hist_loss, sequenze_size, n_lstm_layer, n_hidden_lstm, n_hidden_fc, time):
         with open(self.location_stats, 'a') as file:
-            file.write("\n"+str(round(min(hist_loss),2))+","+str(sequenze_size)+","+str(n_lstm_layer)+","+
-            str(n_hidden_lstm)+","+str(n_hidden_fc)+","+str(round(time,1)))
+            file.write("\n"+str(round(min(hist_loss),2))+","+str(sequenze_size)+","+str(n_lstm_layer)+","+ \
+                       str(n_hidden_lstm)+","+str(n_hidden_fc)+","+str(round(time,1)))
 
 class TrainerMultiTaskLearning():
     def __init__(self, model, optimizer, scheduler, scheduler_active, criterion, patience, location_model, location_stats):
@@ -221,5 +221,5 @@ class TrainerMultiTaskLearning():
     
     def save_statistic(self, hist_loss, sequenze_size, n_lstm_layer, n_hidden_lstm, n_hidden_fc, time):
         with open(self.location_stats, 'a') as file:
-            file.write("\n"+str(round(min(hist_loss),2))+","+str(sequenze_size)+","+str(n_lstm_layer)+","+
-            str(n_hidden_lstm)+","+str(n_hidden_fc)+","+str(round(time,1))) 
+            file.write("\n"+str(round(min(hist_loss),2))+","+str(sequenze_size)+","+str(n_lstm_layer)+","+ \
+                       str(n_hidden_lstm)+","+str(n_hidden_fc)+","+str(round(time,1))) 

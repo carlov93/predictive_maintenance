@@ -51,7 +51,7 @@ class LstmMse(nn.Module):
         # Forward path through the subsequent fully connected tanh activation neural network
         out_y_hat = self.fc1(last_out)
         out_y_hat = self.dropout(out_y_hat)
-        out_y_hat = F.tanh(out_y_hat)
+        out_y_hat = torch.tanh(out_y_hat)
         out_y_hat = self.fc2(out_y_hat)
         return out_y_hat
 
@@ -103,7 +103,7 @@ class LstmMle(nn.Module):
         # neural network with 2q output channels
         out = self.fc1(last_out)
         out = self.dropout(out)
-        out = F.tanh(out)
+        out = torch.tanh(out)
         y_hat = self.fc_y_hat(out)
         tau = self.fc_tau(out)
         return [y_hat, tau]
