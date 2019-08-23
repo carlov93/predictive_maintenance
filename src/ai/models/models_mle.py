@@ -2,15 +2,17 @@ import torch
 import torch.nn as nn
 
 class LstmMle_1(nn.Module):
-    def __init__(self, batch_size, input_dim, n_hidden_lstm, n_layers, dropout_rate, n_hidden_fc):
-        super(LstmMle, self).__init__()
+    def __init__(self, batch_size, input_dim, n_hidden_lstm, n_layers, dropout_rate_lstm, dropout_rate_fc, n_hidden_fc, K):
+        super(LstmMle_1, self).__init__()
         # Attributes for LSTM Network
         self.input_dim = input_dim
         self.n_hidden_lstm = n_hidden_lstm
         self.n_layers = n_layers
         self.batch_size = batch_size
-        self.dropout_rate = dropout_rate
+        self.dropout_rate_fc = dropout_rate_fc
+        self.dropout_rate_lstm = dropout_rate_lstm
         self.n_hidden_fc = n_hidden_fc
+        self.K = K
         
         # Definition of NN layer
         # batch_first = True because dataloader creates batches and batch_size is 0. dimension
@@ -18,9 +20,9 @@ class LstmMle_1(nn.Module):
                             hidden_size = self.n_hidden_lstm, 
                             num_layers = self.n_layers, 
                             batch_first = True, 
-                            dropout = self.dropout_rate)
+                            dropout = self.dropout_rate_lstm)
         self.fc1 = nn.Linear(self.n_hidden_lstm, self.n_hidden_fc)
-        self.dropout = nn.Dropout(p=self.dropout_rate)
+        self.dropout = nn.Dropout(p=self.dropout_rate_fc)
         self.fc_y_hat = nn.Linear(self.n_hidden_fc, self.input_dim)
         self.fc_tau = nn.Linear(self.n_hidden_fc, self.input_dim)
         
@@ -45,7 +47,7 @@ class LstmMle_1(nn.Module):
         out = torch.tanh(out)
         y_hat = self.fc_y_hat(out)
         tau = self.fc_tau(out)
-        return [y_hat, tau]
+        return [y_hat, tau * self.K]
     
     def init_hidden(self):
         # This method is for initializing hidden state as well as cell state
@@ -55,14 +57,15 @@ class LstmMle_1(nn.Module):
         return [t for t in (h0, c0)]
 
 class LstmMle_2(nn.Module):
-    def __init__(self, batch_size, input_dim, n_hidden_lstm, n_layers, dropout_rate, n_hidden_fc):
-        super(LstmMle, self).__init__()
+    def __init__(self, batch_size, input_dim, n_hidden_lstm, n_layers, dropout_rate_lstm, dropout_rate_fc, n_hidden_fc):
+        super(LstmMle_2, self).__init__()
         # Attributes for LSTM Network
         self.input_dim = input_dim
         self.n_hidden_lstm = n_hidden_lstm
         self.n_layers = n_layers
         self.batch_size = batch_size
-        self.dropout_rate = dropout_rate
+        self.dropout_rate_fc = dropout_rate_fc
+        self.dropout_rate_lstm = dropout_rate_lstm
         self.n_hidden_fc = n_hidden_fc
         
         # Definition of NN layer
@@ -71,9 +74,9 @@ class LstmMle_2(nn.Module):
                             hidden_size = self.n_hidden_lstm, 
                             num_layers = self.n_layers, 
                             batch_first = True, 
-                            dropout = self.dropout_rate)
+                            dropout = self.dropout_rate_lstm)
         self.fc1 = nn.Linear(self.n_hidden_lstm, self.n_hidden_fc)
-        self.dropout = nn.Dropout(p=self.dropout_rate)
+        self.dropout = nn.Dropout(p=self.dropout_rate_fc)
         self.fc_y_hat = nn.Linear(self.n_hidden_fc, self.input_dim)
         self.fc_tau = nn.Linear(self.n_hidden_fc, self.input_dim)
         
@@ -98,7 +101,7 @@ class LstmMle_2(nn.Module):
         out = torch.tanh(out)
         y_hat = self.fc_y_hat(out)
         tau = self.fc_tau(out)
-        return [y_hat, tau]
+        return [y_hat, tau * self.K]
     
     def init_hidden(self):
         # This method is for initializing hidden state as well as cell state

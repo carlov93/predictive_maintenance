@@ -2,24 +2,16 @@ import torch
 import torch.nn as nn
 import csv
 
-class AnalysisLayer(nn.Module):
-    def __init__(self):
-        super(AnalysisLayer, self).__init__()
-    
-    def forward(self, x):
-        global latent_space
-        latent_space = x.detach()
-        return x
-
 class LstmMse(nn.Module):
-    def __init__(self, batch_size, input_dim, n_hidden_lstm, n_layers, dropout_rate, n_hidden_fc):
+    def __init__(self, batch_size, input_dim, n_hidden_lstm, n_layers, dropout_rate_lstm, dropout_rate_fc, n_hidden_fc):
         super(LstmMse, self).__init__()
         # Attributes for LSTM Network
         self.input_dim = input_dim
         self.n_hidden_lstm = n_hidden_lstm
         self.n_layers = n_layers
         self.batch_size = batch_size
-        self.dropout_rate = dropout_rate
+        self.dropout_rate_fc = dropout_rate_fc
+        self.dropout_rate_lstm = dropout_rate_lstm
         self.n_hidden_fc = n_hidden_fc
         
         # Definition of NN layer
@@ -28,9 +20,9 @@ class LstmMse(nn.Module):
                             hidden_size = self.n_hidden_lstm, 
                             num_layers = self.n_layers, 
                             batch_first = True, 
-                            dropout = self.dropout_rate)
+                            dropout = self.dropout_rate_lstm)
         self.fc1 = nn.Linear(self.n_hidden_lstm, self.n_hidden_fc)
-        self.dropout = nn.Dropout(p=self.dropout_rate)
+        self.dropout = nn.Dropout(p=self.dropout_rate_fc)
         self.fc2 = nn.Linear(self.n_hidden_fc, self.input_dim)
         
     def forward(self, input_data, hidden):

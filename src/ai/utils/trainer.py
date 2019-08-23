@@ -24,7 +24,7 @@ class Trainer():
         self.location_stats = location_stats
     
     def train(self, data_loader_training):
-        for batch_number, data in enumerate(data_loader_training):
+        for batch_number, (input_data, target_data) in enumerate(data_loader_training):
             # The LSTM has to be reinitialised, otherwise the LSTM will treat a new batch 
             # as a continuation of a sequence. When batches of data are independent sequences, 
             # then you should reinitialise the hidden state before each batch. 
@@ -32,8 +32,6 @@ class Trainer():
             # making sure that each batch follows on from the previous batch, then in that case 
             # you wouldn’t reinitialise the hidden state before each batch.
             # In the current workflow of class DataProvoider independent sequences are returned. 
-            input_data, target_data = data
-            
             self.model.train()
             hidden = self.model.init_hidden()
 
