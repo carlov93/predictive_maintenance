@@ -115,7 +115,7 @@ class LstmMle(nn.Module):
         c0 = torch.zeros(self.n_layers, self.batch_size, self.n_hidden_lstm, requires_grad=False)
         return [t for t in (h0, c0)]
     
-class LstmMultiTaskLearning(nn.Module):
+class LstmMse_LatentSpace(nn.Module):
     def __init__(self, batch_size, input_dim, n_hidden_lstm, n_layers, 
                  dropout_rate, n_hidden_fc_prediction, n_hidden_fc_ls_analysis):
         super(LstmMultiTaskLearning, self).__init__()
