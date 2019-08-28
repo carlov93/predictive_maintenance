@@ -66,7 +66,7 @@ class PredictorMse():
                 loss_share_per_sensor_np + residuals
                 batch_results.append(data)
                         
-            return batch_results
+        return batch_results
         
     def detect_anomaly(self, results_prediction, smooth_rate):
         # Drop all empty columns
@@ -152,7 +152,7 @@ class PredictorMultiTaskLearning():
                 residuals + latent_space_np
                 batch_results.append(data)
                         
-            return batch_results
+        return batch_results
 
         
     def detect_anomaly(self, results_prediction, smooth_rate):
@@ -188,17 +188,14 @@ class PredictorMle():
         
     def create_column_names_result_mse(self):
         column_names_target = [column_name+" target" for column_name in self.column_names_data if column_name not in self.columns_to_ignore+["ID"]]
-        column_names_predicted = [column_name+" predicted" for column_name in self.column_names_data if column_name not in self.columns_to_ignore+["ID"]]
-        column_names_loss_per_sensor = [column_name+" share of loss " for column_name in self.column_names_data if column_name not in self.columns_to_ignore+["ID"]]
-        column_names_residuals= ["normalised residual "+column_name for column_name in self.column_names_data if column_name not in self.columns_to_ignore+["ID"]]
-        return ["ID"] + column_names_target + column_names_predicted + ["loss"] + column_names_loss_per_sensor + column_names_residuals
+        column_names_mu_predicted = [column_name+" mu predicted" for column_name in self.column_names_data if column_name not in self.columns_to_ignore+["ID"]]
+        column_names_sigma_predicted = [column_name+" sigma predicted" for column_name in self.column_names_data if column_name not in self.columns_to_ignore+["ID"]]
+        column_names_normalised_residuals= [column_name+" normalised residual" for column_name in self.column_names_data if column_name not in self.columns_to_ignore+["ID"]]
+        return ["ID"] + column_names_target + column_names_mu_predicted + column_names_sigma_predicted + ["normalised residual"] +  column_names_normalised_residuals
            
     def predict(self, data_loader):
-        results = pd.DataFrame(columns=self.create_column_names_result())
         self.model.eval()
         with torch.no_grad():
-            print("Start predicting")
-            for batch_number, data in enumerate(data_loader):
                 input_data, target_data = data
                 
                 # Store ID of target sample 
@@ -212,34 +209,42 @@ class PredictorMle():
                 hidden = self.model.init_hidden()
 
                 # Forward propagation
-                y_hat, tau = self.model(input_data, hidden)
+                mu, tau = self.model(input_data, hidden)
                 
                 # Because of the transformation of sigma inside the LossModuleMle (σ_t = exp(τ_t))
                 # we have to revert this transformation with exp(tau_i).
-                # ToDo: sigma = torch.exp(tau) ????????
-                
-                # Calculate loss
-                loss = self.criterion(y_hat, target_data)
-                loss_share_per_sensor = self.criterion.share_per_sensor(y_hat, target_data)
+                sigma_batches = torch.exp(tau)
                 
                 # Reshape and Calculate prediction metrics
-                y_hat = torch.squeeze(y_hat)
-                predicted_data = y_hat.data.numpy().tolist()
-                sigma = torch.squeeze(sigma)
-                sigma = sigma.data.numpy().tolist()
-                target_data = torch.squeeze(target_data)
-                target_data = target_data.data.numpy().tolist()
-                loss_share_per_sensor = torch.squeeze(loss_share_per_sensor)
-                loss_share_per_sensor = loss_share_per_sensor.data.numpy().tolist()
-                normalised_residuals = [(target_i - prediction_i)/sigma_i for target_i, prediction_i, sigma_i in zip(target_data, predicted_data, sigma)]
-                
-                # Add values to dataframe 
-                data = [id_target] + target_data + predicted_data + [loss.item()] + loss_share_per_sensor + normalised_residuals
-                results = results.append(pd.Series(data, index=results.columns), ignore_index=True)
-                
-                # Print status
-                if id_target%5000 == 0:
-                    print("Current status: " + str(id_target) + " samples are predicted.")
+                batch_results= []
+                for batch in range(self.model.batch_size):
+                    mu_predicted = mu[batch,:].data.numpy().tolist()
+                    ground_truth = target_data[batch,:].data.numpy().tolist()
+                    sigma_predicted = sigma_batches[batch,:].data.numpy().tolist()
+                    normalised_residual_per_sensor = [(target_i - prediction_i)/sigma_i for target_i, prediction_i, sigma_i in zip(ground_truth, mu_predicted, sigma)]
+                    normalised_residual = sum(normalised_residual_per_sensor)
                     
-            print("Finished predicting")                      
-            return results
+                    data = [id_target[batch].item()] + ground_truth + mu_predicted + sigma_predicted + [normalised_residual] + \
+                    normalised_residual_per_sensor
+                    batch_results.append(data)
+
+        return batch_results
+
+    def detect_anomaly(self, results_prediction, smooth_rate):
+        # Drop all empty columns
+        results_prediction.drop(results_prediction.columns[results_prediction.columns.str.contains('unnamed',case = False)],axis = 1, inplace = True)
+        
+        # smooth loss to 
+        smoothed_normalised_residual = []
+        for i,value in enumerate(results_prediction.loc[:,"normalised residual"]):
+            if i==0:
+                smoothed_normalised_residual.append(value)
+            else:
+                x = smooth_rate  * value + (1 - smooth_rate) * smoothed_loss[-1]
+                smoothed_normalised_residual.append(x)
+        results_prediction["smoothed_normalised_residual"]=smoothed_normalised_residual
+        
+        # tag sample as an anomaly (1) if loss is higher than given threshold, otherwhise 0 
+        results_prediction["anomaly"] = np.where(results_prediction["smoothed_normalised_residual"]>=self.threshold_anomaly, 1, 0)
+        return results_prediction
+    

@@ -26,24 +26,26 @@ class LossMse(torch.nn.Module):
     
 class LossMle(torch.nn.Module):
     def __init__(self, input_size, batch_size):
+        """
+        In the constructor we instantiate the module and assign them as
+        member variables.
+        """
         super(LossMle, self).__init__()
         self.input_size = input_size
         self.batch_size = batch_size
 
-    def forward(self, output, target_data):
+    def forward(self, input_data, target_data):
         """
-        In the forward function we accept a Tensor of input data and we must return
-        a Tensor of output data.
         We are minimizing the the negative log likelihood loss function.
         We write σ_t = exp(τ_t) to guarantee σ > 0 and to provide numerical stability in the learning process.
-        """
-        # Extract elements from output
-        y_hat, tau = output
+        """    
+        y_hat, tau = input_data
         
         # Compute loss
         term = torch.pow((target_data - y_hat) / torch.exp(tau), 2) + 2 * tau
         loss_batches = torch.sum(input=term, dim=1) / self.input_size
-        mean_loss = torch.sum(loss_batches)/self.batch_size
+        mean_loss = torch.sum(loss_batches)/self.batch_size    
+        list_loss.append(mean_loss.item())
         return mean_loss
 
 class LossMseInference(torch.nn.Module):

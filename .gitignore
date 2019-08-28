@@ -1,6 +1,7 @@
 
 # Don't track content of these folders
 venv_pm/
+models/
 data/phm_data_challenge/
 src/visualisation/files/
 src/visualisation/graphs/
