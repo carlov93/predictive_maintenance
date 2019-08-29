@@ -133,16 +133,16 @@ class LstmMle_LatentSpace(nn.Module):
         p_tau = self.p_fc_tau(p_out)
     
         # Forward pass through sub network for latent space analysis
-        ls_out = self.fc1(last_out)
-        ls_out = self.dropout(out)
-        ls_out = torch.tanh(out)
-        ls_out = self.ls_analysis(ls_out)
-        ls_y_hat = self.fc_y_hat(out)
-        ls_tau = self.fc_tau(out)
+        ls_out = self.ls_fc1(last_out)
+        ls_out = self.ls_dropout(ls_out)
+        ls_out = torch.tanh(ls_out)
+        # Store current latent space 
+        global latent_space
+        self.current_latent_space = ls_out.detach()
+        # Continue forward pass
+        ls_y_hat = self.ls_fc_y_hat(ls_out)
+        ls_tau = self.ls_fc_tau(ls_out)
         _ = [ls_y_hat, ls_tau * self.K]
-        
-        # Save latent space
-        self.current_latent_space = latent_space
         
         return [p_y_hat, p_tau * self.K], _
         

@@ -19,7 +19,7 @@ class Trainer():
         self.epoch_validation_loss = []
         self.lowest_loss = 99
         self.trials = 0
-        self.fold = "Fold xx"
+        self.fold = "Fold_xx"
         self.patience = patience
         self.location_model = location_model
         self.location_stats = location_stats
