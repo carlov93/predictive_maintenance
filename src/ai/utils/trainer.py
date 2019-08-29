@@ -6,7 +6,8 @@ import numpy as np
 import builtins
 
 class Trainer():
-    def __init__(self, model, optimizer, scheduler, scheduler_active, criterion, patience, location_model, location_stats):
+    def __init__(self, model, optimizer, scheduler, scheduler_active, criterion, 
+                 patience, location_model, location_stats):
         self.model = model
         # lr=1. because of scheduler (1*learning_rate_schedular)
         self.optimizer = optimizer
@@ -83,7 +84,8 @@ class Trainer():
         self.epoch_training_loss = []
         self.epoch_validation_loss = []
                  
-    def save_model(self, epoch, mean_epoch_validation_loss, input_size, n_lstm_layer, n_hidden_lstm, n_hidden_fc, seq_size):
+    def save_model(self, epoch, mean_epoch_validation_loss, input_size, n_lstm_layer, 
+                   n_hidden_lstm, n_hidden_fc, seq_size):
         if mean_epoch_validation_loss < self.lowest_loss:
             self.trials = 0
             self.lowest_loss = mean_epoch_validation_loss
@@ -110,15 +112,18 @@ class Trainer():
             file.write("\n"+str(round(min(hist_loss),2))+","+str(sequenze_size)+","+str(n_lstm_layer)+","+ \
                        str(n_hidden_lstm)+","+str(n_hidden_fc)+","+str(round(time,1)))
 
-class TrainerMultiTaskLearning():
-    def __init__(self, model, optimizer, scheduler, scheduler_active, criterion, patience, location_model, location_stats):
+            
+class TrainerLatentSpaceAnalyser():
+    def __init__(self, model, optimizer, scheduler, scheduler_active, criterion_prediction, 
+                 criterion_ls, patience, location_model, location_stats):
         self.model = model
         # lr=1. because of scheduler (1*learning_rate_schedular)
         self.optimizer = optimizer
         self.scheduler = scheduler
         self.scheduler_active = scheduler_active
         # initialize further variables
-        self.criterion = criterion
+        self.criterion_prediction = criterion_prediction
+        self.criterion_ls = criterion_ls
         self.epoch_training_loss = []
         self.epoch_validation_loss = []
         self.lowest_loss = 99
@@ -148,9 +153,9 @@ class TrainerMultiTaskLearning():
             prediction, _ = self.model(input_data, hidden)
             
             # Calculate loss
-            l1 = self.criterion(prediction, target_data)   
-            l2 = self.criterion(_, target_data)
-            loss =  (l1 + l2)/2
+            l1 = self.criterion_prediction(prediction, target_data)   
+            l2 = self.criterion_ls(_, target_data)
+            loss =  (l1 + l2) / 2
             self.epoch_training_loss.append(loss.item())
 
             # Backward pass
@@ -177,8 +182,8 @@ class TrainerMultiTaskLearning():
                 prediction, _ = self.model(input_data, hidden)
 
                 # Calculate loss
-                l1 = self.criterion(prediction, target_data)   
-                l2 = self.criterion(_, target_data)
+                l1 = self.criterion_prediction(prediction, target_data)   
+                l2 = self.criterion_ls(_, target_data)
                 loss =  (l1 + l2)/2
                 self.epoch_validation_loss.append(loss.item())
             

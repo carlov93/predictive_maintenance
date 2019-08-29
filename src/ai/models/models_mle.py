@@ -2,6 +2,10 @@ import torch
 import torch.nn as nn
 
 class LstmMle_1(nn.Module):
+    """
+    Last layer of subsequent fully connected tanh activation neural network is split into two linear layers
+    to seperate prediction for y_hat and tau. 
+    """
     def __init__(self, batch_size, input_dim, n_hidden_lstm, n_layers, dropout_rate_lstm, dropout_rate_fc, n_hidden_fc, K):
         super(LstmMle_1, self).__init__()
         # Attributes for LSTM Network
@@ -57,6 +61,10 @@ class LstmMle_1(nn.Module):
         return [t for t in (h0, c0)]
 
 class LstmMle_2(nn.Module):
+    """
+    Subsequent fully connected tanh activation neural network is split into two sub-networks.
+    One is for predicting y_hat, the other for predicting tau.
+    """
     def __init__(self, batch_size, input_dim, n_hidden_lstm, n_layers, dropout_rate_lstm, dropout_rate_fc, n_hidden_fc):
         super(LstmMle_2, self).__init__()
         # Attributes for LSTM Network
@@ -75,10 +83,12 @@ class LstmMle_2(nn.Module):
                             num_layers = self.n_layers, 
                             batch_first = True, 
                             dropout = self.dropout_rate_lstm)
-        self.fc1 = nn.Linear(self.n_hidden_lstm, self.n_hidden_fc)
-        self.dropout = nn.Dropout(p=self.dropout_rate_fc)
-        self.fc_y_hat = nn.Linear(self.n_hidden_fc, self.input_dim)
-        self.fc_tau = nn.Linear(self.n_hidden_fc, self.input_dim)
+        self.fc1_y_hat = nn.Linear(self.n_hidden_lstm, self.n_hidden_fc)
+        self.fc1_tau = nn.Linear(self.n_hidden_lstm, self.n_hidden_fc)
+        self.dropout_y_hat = nn.Dropout(p=self.dropout_rate_fc)
+        self.dropout_tau = nn.Dropout(p=self.dropout_rate_fc)
+        self.fc2_y_hat = nn.Linear(self.n_hidden_fc, self.input_dim)
+        self.fc2_tau = nn.Linear(self.n_hidden_fc, self.input_dim)
         
     def forward(self, input_data, hidden):
         # Forward propagate LSTM
@@ -96,11 +106,18 @@ class LstmMle_2(nn.Module):
 
         # Forward path through the subsequent fully connected tanh activation 
         # neural network with 2q output channels
-        out = self.fc1(last_out)
-        out = self.dropout(out)
-        out = torch.tanh(out)
-        y_hat = self.fc_y_hat(out)
-        tau = self.fc_tau(out)
+        # Subnetwork for prediction of y_hat
+        out_y_hat = self.fc1_y_hat(last_out)
+        out_y_hat = self.dropout_y_hat(out_y_hat)
+        out_y_hat = torch.tanh(out_y_hat)
+        y_hat = self.fc2_y_hat(out_y_hat)
+        
+        # Subnetwork for prediction of tau
+        out_tau = self.fc1_tau(last_out)
+        out_tau = self.dropout_tau(out_tau)
+        out_tau = torch.tanh(out_tau)
+        tau = self.fc2_tau(out)
+        
         return [y_hat, tau * self.K]
     
     def init_hidden(self):
