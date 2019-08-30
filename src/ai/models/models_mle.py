@@ -50,10 +50,6 @@ class LstmMle_1(nn.Module):
         out = self.fc1(last_out)
         out = self.dropout(out)
         out = torch.tanh(out)
-        # Store current latent space 
-        global latent_space
-        self.current_latent_space = out.detach()
-        # Continue forward pass
         y_hat = self.fc_y_hat(out)
         tau = self.fc_tau(out)
         return [y_hat, tau * self.K]
@@ -70,7 +66,7 @@ class LstmMle_2(nn.Module):
     Subsequent fully connected tanh activation neural network is split into two sub-networks.
     One is for predicting y_hat, the other for predicting tau.
     """
-    def __init__(self, batch_size, input_dim, n_hidden_lstm, n_layers, dropout_rate_lstm, dropout_rate_fc, n_hidden_fc):
+    def __init__(self, batch_size, input_dim, n_hidden_lstm, n_layers, dropout_rate_lstm, dropout_rate_fc, n_hidden_fc, K):
         super(LstmMle_2, self).__init__()
         # Attributes for LSTM Network
         self.input_dim = input_dim
@@ -81,6 +77,7 @@ class LstmMle_2(nn.Module):
         self.dropout_rate_lstm = dropout_rate_lstm
         self.n_hidden_fc = n_hidden_fc
         self.current_latent_space = None
+        self.K = K
         
         # Definition of NN layer
         # batch_first = True because dataloader creates batches and batch_size is 0. dimension
@@ -116,10 +113,6 @@ class LstmMle_2(nn.Module):
         out_y_hat = self.fc1_y_hat(last_out)
         out_y_hat = self.dropout_y_hat(out_y_hat)
         out_y_hat = torch.tanh(out_y_hat)
-        # Store current latent space 
-        global latent_space
-        self.current_latent_space = out_y_hat.detach()
-        # Continue forward pass
         y_hat = self.fc2_y_hat(out_y_hat)
         
         # Subnetwork for prediction of tau
