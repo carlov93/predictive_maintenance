@@ -164,7 +164,6 @@ class PredictorMle():
             results_prediction["Anomaly Sensor_"+str(no_sensor)]= anomaly
         return results_prediction
 
-
 class PredictorMseLatentSpaceAnalyser():
     def __init__(self, model, path_data, columns_to_ignore, threshold_anomaly):
         self.model = model
