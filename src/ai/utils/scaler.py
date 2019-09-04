@@ -10,10 +10,7 @@ class DataScaler():
     def scale_data_test_dataset(self, test_data, mean_test_data, var_test_data):
         data_numpy = test_data.values
         # Transform data for prediction with mean and variance of training data
-        test_scaled = np.zeros(shape=(len(data_numpy[:,0]), data_numpy.shape[1]))
-        
-        # Copy ID of each sample
-        test_scaled[:,0]=data_numpy[:,0]
+        test_scaled = np.zeros(shape=(data_numpy.shape[0], data_numpy.shape[1]))
         
         i = 0
         for mean, var in zip(mean_test_data, var_test_data):
