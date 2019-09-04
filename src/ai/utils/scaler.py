@@ -47,3 +47,6 @@ class DataScaler():
             train_scaled = np.concatenate((continous_train_scaled, categorical_features_train), axis=1)
             validation_scaled = np.concatenate((continous_validation_scaled, categorical_features_validation), axis=1)
         return train_scaled, validation_scaled
+    
+    def provide_statistics(self):
+        return self.scaler.mean_, self.scaler.var_
