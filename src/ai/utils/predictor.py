@@ -338,13 +338,15 @@ class PredictorMleLatentSpaceAnalyser():
         return results_prediction
 
 class PredictorMleSpecial():
-    def __init__(self, model, path_data, columns_to_ignore, threshold_anomaly, no_standard_deviation):
+    def __init__(self, model, path_data, columns_to_ignore, threshold_anomaly, no_standard_deviation, deep, seperate):
         self.model = model
         self.path_data = path_data
         self.column_names_data = self.get_column_names_data()
         self.columns_to_ignore = columns_to_ignore
         self.threshold_anomaly = threshold_anomaly
         self.no_standard_deviation = no_standard_deviation
+        self.deep = deep
+        self.seperate = seperate
 
     def get_column_names_data(self):
         with open(self.path_data, 'r') as f:
@@ -360,12 +362,23 @@ class PredictorMleSpecial():
                                         if column_name not in self.columns_to_ignore+["ID"]]
         column_names_normalised_residuals= [column_name+" normalised residual" for column_name in self.column_names_data 
                                             if column_name not in self.columns_to_ignore+["ID"]]
-        column_names_latent_space_y_hat= ["y_hat latent_space_"+str(i) for i in range(self.model.n_hidden_fc_2)]
-        column_names_latent_space_tau= ["ltau atent_space_"+str(i) for i in range(self.model.n_hidden_fc_2)]
-        
-        column_names = ["ID"] + column_names_target + column_names_mu_predicted + column_names_sigma_predicted + \
+        if self.deep:
+            column_names_latent_space_y_hat= ["y_hat latent_space_"+str(i) for i in range(self.model.n_hidden_fc_2)]
+            column_names_latent_space_tau= ["ltau atent_space_"+str(i) for i in range(self.model.n_hidden_fc_2)]
+            column_names = ["ID"] + column_names_target + column_names_mu_predicted + column_names_sigma_predicted + \
                     ["mean normalised residual"] +  column_names_normalised_residuals + column_names_latent_space_y_hat + \
                     column_names_latent_space_tau
+        elif not self.deep and self.seperate:
+            column_names_latent_space_y_hat= ["y_hat latent_space_"+str(i) for i in range(self.model.n_hidden_fc_1)]
+            column_names_latent_space_tau= ["ltau atent_space_"+str(i) for i in range(self.model.n_hidden_fc_1)]
+            column_names = ["ID"] + column_names_target + column_names_mu_predicted + column_names_sigma_predicted + \
+                    ["mean normalised residual"] +  column_names_normalised_residuals + column_names_latent_space_y_hat + \
+                    column_names_latent_space_tau
+        else:
+            column_names_latent_space= ["latent_space_"+str(i) for i in range(self.model.n_hidden_fc_1)]
+            column_names = ["ID"] + column_names_target + column_names_mu_predicted + column_names_sigma_predicted + \
+                    ["mean normalised residual"] +  column_names_normalised_residuals + column_names_latent_space
+            
         return column_names
            
     def predict(self, input_data, target_data):
@@ -383,9 +396,15 @@ class PredictorMleSpecial():
 
             # Forward propagation
             mu, tau = self.model(input_data, hidden)
-            latent_space_y_hat = self.model.current_latent_space_y_hat
-            latent_space_tau = self.model.current_latent_space_tau
-                
+            
+            # Get latent space
+            if not self.seperate:
+                latent_space = self.model.current_latent_space
+            
+            else:
+                latent_space_y_hat = self.model.current_latent_space_y_hat
+                latent_space_tau = self.model.current_latent_space_tau
+
             # Because of the transformation of sigma inside the LossModuleMle (σ_t = exp(τ_t))
             # we have to revert this transformation with exp(tau_i).
             sigma_batches = torch.exp(tau)
@@ -396,13 +415,20 @@ class PredictorMleSpecial():
                 mu_predicted = mu[batch,:].data.numpy().tolist()
                 ground_truth = target_data[batch,:].data.numpy().tolist()
                 sigma_predicted = sigma_batches[batch,:].data.numpy().tolist()
-                latent_space_y_hat_np = latent_space_y_hat[batch,:].data.numpy().tolist()
-                latent_space_tau_np = latent_space_tau[batch,:].data.numpy().tolist()
                 normalised_residual_per_sensor = [(target_i - prediction_i) / sigma_i for target_i, prediction_i, sigma_i in zip(ground_truth, mu_predicted, sigma_predicted)]
                 normalised_residual = sum(normalised_residual_per_sensor) / self.model.input_dim
+                
+                if not self.seperate:
+                    latent_space_np = latent_space[batch,:].data.numpy().tolist()
+                    data = [id_target[batch].item()] + ground_truth + mu_predicted + sigma_predicted + [normalised_residual] + \
+                            normalised_residual_per_sensor + latent_space_np
                     
-                data = [id_target[batch].item()] + ground_truth + mu_predicted + sigma_predicted + [normalised_residual] + \
-                normalised_residual_per_sensor + latent_space_y_hat_np + latent_space_tau_np
+                else: 
+                    latent_space_y_hat_np = latent_space[batch,:].data.numpy().tolist()
+                    latent_space_tau_np = latent_space[batch,:].data.numpy().tolist()
+                    data = [id_target[batch].item()] + ground_truth + mu_predicted + sigma_predicted + [normalised_residual] + \
+                            normalised_residual_per_sensor + latent_space_y_hat_np + latent_space_tau_np
+                
                 batch_results.append(data)
 
         return batch_results

@@ -196,6 +196,7 @@ class TrainerLatentSpaceAnalyser():
     def cache_history_training(self, hist_loss, epoch, mean_epoch_training_loss, mean_epoch_validation_loss):
         # Save training and validation loss to history
         print("-------- epoch_no. {} finished with eval loss {}--------".format(epoch, mean_epoch_validation_loss))
+        hist_loss.append(history) 
         return {'epoch': epoch, 'training': mean_epoch_training_loss, 'validation': mean_epoch_validation_loss}
             
         # Empty list for new epoch 
