@@ -86,6 +86,10 @@ class Trainer():
                  
     def save_model(self, epoch, mean_epoch_validation_loss, input_size, n_lstm_layer, 
                    n_hidden_lstm, n_hidden_fc, seq_size):
+        
+        path_model = self.location_model+self.fold+"_InputSize"+str(input_size)+"_LayerLstm"+ str(n_lstm_layer)+ \
+                    "_HiddenLstm"+str(n_hidden_lstm)+"_HiddenFc"+str(n_hidden_fc)+"_Seq"+str(seq_size)+".pt"
+        
         if mean_epoch_validation_loss < self.lowest_loss:
             self.trials = 0
             self.lowest_loss = mean_epoch_validation_loss
@@ -93,10 +97,9 @@ class Trainer():
                 'model_state_dict': self.model.state_dict(),
                 'optimizer_state_dict': self.optimizer.state_dict(),
                 'loss': mean_epoch_validation_loss
-            }, self.location_model+self.fold+"_InputSize"+str(input_size)+"_LayerLstm"+
-                str(n_lstm_layer)+"_HiddenLstm"+str(n_hidden_lstm)+"_HiddenFc"+str(n_hidden_fc)+"_Seq"+str(seq_size)+".pt")
+            }, path_model)
             print("Epoch {}: best model saved with loss: {}".format(epoch, mean_epoch_validation_loss))
-            return True
+            return True, path_model
     
         # Else: Increase trails by one and start new epoch as long as not too many epochs 
         # were unsuccessful (controlled by patience)
@@ -105,7 +108,7 @@ class Trainer():
             if self.trials >= self.patience :
                 print("Early stopping on epoch {}".format(epoch))
                 return False
-            return True
+            return True, path_model
     
     def save_statistic(self, hist_loss, sequenze_size, n_lstm_layer, n_hidden_lstm, n_hidden_fc, time):
         with open(self.location_stats, 'a') as file:
