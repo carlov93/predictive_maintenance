@@ -23,8 +23,8 @@
 Calculation for three points (Because each data point is independent of each other, the probability of all points in the dataset is expressed as a product)
 ![](../pictures/likelihood_3points.png)
 
-Mor general: 
-![](../pictures/likelihood_product.jpeg.png)
+More general: 
+![](../pictures/likelihood_product.jpeg)
 
 - All we have to do is find the derivative of this function, set the derivative function to zero and then rearrange the equation to make the parameter of interest the subject of the equation and we have our MLE values for our parameters.
 - The above expression for the total probability is actually quite a pain to differentiate, so it is almost always simplified by taking the natural logarithm of the expression.
@@ -44,7 +44,7 @@ A few assumptions about our dataset:
 
 ## Probability vs. Likelihood
 
-![](../L_P.png.jpeg)
+![](../pictures/L_P.png)
 
 These expressions are equal! So what does this mean? Let’s first define P(data; μ, σ). It means “the probability density of observing the data with model parameters μ and σ”.
 
@@ -52,5 +52,3 @@ On the other hand L(μ, σ; data) means “the likelihood of the parameters μ a
 
 The equation above says that the probability density of the data given the parameters is equal to the likelihood of the parameters given the data. But despite these two things being equal, the likelihood and the probability density are fundamentally asking different questions — one is asking about the data and the other is asking about the parameter values.
 
-
-## Joint probability distribution
