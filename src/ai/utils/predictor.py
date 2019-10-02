@@ -25,10 +25,8 @@ class PredictorMse():
                                   if column_name not in self.columns_to_ignore+["ID"]]
         column_names_loss_per_sensor = [column_name+" reconstruction error " for column_name in self.column_names_data 
                                         if column_name not in self.columns_to_ignore+["ID"]]
-        column_names_residuals= ["residual "+column_name for column_name in self.column_names_data 
-                                 if column_name not in self.columns_to_ignore+["ID"]]
         
-        column_names = ["ID"] + column_names_target + column_names_predicted + ["reconstruction error"] + column_names_loss_per_sensor + column_names_residuals
+        column_names = ["ID"] + column_names_target + column_names_predicted + column_names_loss_per_sensor
         return column_names
           
     def predict(self, input_data, target_data):
@@ -52,13 +50,10 @@ class PredictorMse():
                 # Reshape and Calculate prediction metrics
                 predicted_data = output[batch,:].data.numpy().tolist()
                 ground_truth = target_data[batch,:].data.numpy().tolist()
-                residuals = [target_i - prediction_i for target_i, prediction_i in zip(ground_truth, predicted_data)]
-                reconstruction_error = sum([(ground_truth_i - predicted_i)**2 for ground_truth_i, predicted_i in zip(ground_truth, predicted_data )]) / self.model.input_dim
                 reconstruction_error_per_sensor = [(ground_truth_i - predicted_i)**2 for ground_truth_i, predicted_i in zip(ground_truth, predicted_data )]
 
                 # Add values to dataframe
-                data = [id_target[batch].item()] + ground_truth + predicted_data + [reconstruction_error] + \
-                reconstruction_error_per_sensor + residuals
+                data = [id_target[batch].item()] + ground_truth + predicted_data + reconstruction_error_per_sensor
                 batch_results.append(data)
                         
         return batch_results
@@ -67,21 +62,12 @@ class PredictorMse():
         # Drop all empty columns
         results_prediction.drop(results_prediction.columns[results_prediction.columns.str.contains('unnamed',case = False)],axis = 1, inplace = True)
         
-        # smooth loss to 
-        smoothed_loss = []
-        for i,value in enumerate(results_prediction.loc[:,"loss"]):
-            if i==0:
-                smoothed_loss.append(value)
-            else:
-                x = smooth_rate  * value + (1 - smooth_rate) * smoothed_loss[-1]
-                smoothed_loss.append(x)
-        results_prediction["smoothed_loss"]=smoothed_loss
-        
         # tag sample as an anomaly (1) if loss is higher than given threshold, otherwhise 0 
-        results_prediction["anomaly"] = np.where(results_prediction["smoothed_loss"]>=self.threshold_anomaly, 1, 0)
+        for no_sensor in range(1,self.model.input_dim+1):
+            results_prediction["Anomaly Sensor_"+str(no_sensor)]=np.where(results_prediction.iloc[:,no_sensor+2*self.model.input_dim]>=self.threshold_anomaly[no_sensor-1], 1, 0)
         return results_prediction
-    
 
+    
 class PredictorMle():
     def __init__(self, model, path_data, columns_to_ignore, threshold_anomaly, no_standard_deviation):
         self.model = model
