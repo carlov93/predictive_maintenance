@@ -23,7 +23,7 @@ class PredictorMse():
                                if column_name not in self.columns_to_ignore+["ID"]]
         column_names_predicted = [column_name+" predicted" for column_name in self.column_names_data 
                                   if column_name not in self.columns_to_ignore+["ID"]]
-        column_names_loss_per_sensor = [column_name+" share of reconstruction error " for column_name in self.column_names_data 
+        column_names_loss_per_sensor = [column_name+" reconstruction error " for column_name in self.column_names_data 
                                         if column_name not in self.columns_to_ignore+["ID"]]
         column_names_residuals= ["residual "+column_name for column_name in self.column_names_data 
                                  if column_name not in self.columns_to_ignore+["ID"]]
@@ -54,7 +54,7 @@ class PredictorMse():
                 ground_truth = target_data[batch,:].data.numpy().tolist()
                 residuals = [target_i - prediction_i for target_i, prediction_i in zip(ground_truth, predicted_data)]
                 reconstruction_error = sum([(ground_truth_i - predicted_i)**2 for ground_truth_i, predicted_i in zip(ground_truth, predicted_data )]) / self.model.input_dim
-                reconstruction_error_per_sensor = [(ground_truth_i - predicted_i)**2/reconstruction_error for ground_truth_i, predicted_i in zip(ground_truth, predicted_data )]
+                reconstruction_error_per_sensor = [(ground_truth_i - predicted_i)**2 for ground_truth_i, predicted_i in zip(ground_truth, predicted_data )]
 
                 # Add values to dataframe
                 data = [id_target[batch].item()] + ground_truth + predicted_data + [reconstruction_error] + \
