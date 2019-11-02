@@ -153,7 +153,7 @@ class LstmMle_LatentSpace(nn.Module):
         c0 = torch.zeros(self.n_layers, self.batch_size, self.n_hidden_lstm, requires_grad=False)
         return [t for t in (h0, c0)]
 
-class LstmMle_LatentSpace_old(nn.Module):
+class LstmMle_LatentSpace_new(nn.Module):
     def __init__(self, batch_size, input_dim, n_hidden_lstm, n_layers, 
                  dropout_rate_fc, dropout_rate_lstm, n_hidden_fc_prediction, n_hidden_fc_ls_analysis, K):
         super(LstmMle_LatentSpace, self).__init__()
@@ -202,6 +202,8 @@ class LstmMle_LatentSpace_old(nn.Module):
         # Length of input data can varry 
         length_seq = input_data.size()[1]
         last_out = lstm_out[:,length_seq-1,:]
+        last_cell_state = cell_state[:,length_seq-1,:]
+        print(last_cell_state)
         
         # Forward path through the subsequent fully connected tanh activation 
         # neural network with 2q output channels
@@ -212,7 +214,7 @@ class LstmMle_LatentSpace_old(nn.Module):
         tau = self.fc_tau(out)
     
         # Forward pass through sub network for latent space analysis
-        _ = self.latent_space_analyse_network(last_out)
+        _ = self.latent_space_analyse_network(last_cell_state)
         # Save latent space
         self.current_latent_space = latent_space
         
