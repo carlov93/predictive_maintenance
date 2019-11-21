@@ -70,7 +70,7 @@ class LstmMle_2(nn.Module):
     Subsequent fully connected tanh activation neural network is split into two sub-networks.
     One is for predicting y_hat, the other for predicting tau.
     """
-    def __init__(self, batch_size, input_dim, n_hidden_lstm, n_layers, dropout_rate_lstm, dropout_rate_fc, n_hidden_fc, K):
+    def __init__(self, batch_size, input_dim, n_hidden_lstm, n_layers, dropout_rate_lstm, dropout_rate_fc, n_hidden_fc_1, n_hidden_fc_2, K):
         super(LstmMle_2, self).__init__()
         # Attributes for LSTM Network
         self.input_dim = input_dim
@@ -79,8 +79,8 @@ class LstmMle_2(nn.Module):
         self.batch_size = batch_size
         self.dropout_rate_fc = dropout_rate_fc
         self.dropout_rate_lstm = dropout_rate_lstm
-        self.n_hidden_fc_1 = n_hidden_fc
-        self.n_hidden_fc_2 = 0
+        self.n_hidden_fc_1 = n_hidden_fc_1
+        self.n_hidden_fc_2 = n_hidden_fc_2
         self.current_latent_space_y_hat = None
         self.current_latent_space_tau = None
         self.K = K
@@ -96,8 +96,8 @@ class LstmMle_2(nn.Module):
         self.fc1_tau = nn.Linear(self.n_hidden_lstm, self.n_hidden_fc_1)
         self.dropout_y_hat = nn.Dropout(p=self.dropout_rate_fc)
         self.dropout_tau = nn.Dropout(p=self.dropout_rate_fc)
-        self.fc2_y_hat = nn.Linear(self.n_hidden_fc, self.input_dim)
-        self.fc2_tau = nn.Linear(self.n_hidden_fc, self.input_dim)
+        self.fc2_y_hat = nn.Linear(self.n_hidden_fc_1, self.input_dim)
+        self.fc2_tau = nn.Linear(self.n_hidden_fc_1, self.input_dim)
         
     def forward(self, input_data, hidden):
         # Forward propagate LSTM
