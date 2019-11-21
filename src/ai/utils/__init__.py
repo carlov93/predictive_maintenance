@@ -8,3 +8,4 @@ import utils.data_scaler
 import utils.tester
 import utils.predictor_latent_space
 import utils.predictor_cell_state
+import utils.logger

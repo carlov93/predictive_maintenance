@@ -6,7 +6,7 @@ class LstmMle_1(nn.Module):
     Last layer of subsequent fully connected tanh activation neural network is split into two linear layers
     to seperate prediction for y_hat and tau. 
     """
-    def __init__(self, batch_size, input_dim, n_hidden_lstm, n_layers, dropout_rate_lstm, dropout_rate_fc, n_hidden_fc, K):
+    def __init__(self, batch_size, input_dim, n_hidden_lstm, n_layers, dropout_rate_lstm, dropout_rate_fc, n_hidden_fc_1, K):
         super(LstmMle_1, self).__init__()
         # Attributes for LSTM Network
         self.input_dim = input_dim
@@ -15,9 +15,8 @@ class LstmMle_1(nn.Module):
         self.batch_size = batch_size
         self.dropout_rate_fc = dropout_rate_fc
         self.dropout_rate_lstm = dropout_rate_lstm
-        self.n_hidden_fc_1 = n_hidden_fc
-        self.n_hidden_fc_2 = 0
-        self.current_latent_space = None
+        self.n_hidden_fc_1 = n_hidden_fc_1
+        self.current_cell_state = None
         self.K = K
         
         # Definition of NN layer
@@ -45,15 +44,15 @@ class LstmMle_1(nn.Module):
         # Length of input data can varry 
         length_seq = input_data.size()[1]
         last_out = lstm_out[:,length_seq-1,:]
+        
+        # Get current cell state
+        self.current_cell_state = torch.squeeze(cell_state).detach()
 
         # Forward path through the subsequent fully connected tanh activation 
         # neural network with 2q output channels
         out = self.fc1(last_out)
         out = self.dropout(out)
         out = torch.tanh(out)
-        # Store current latent space 
-        self.current_latent_space = out.detach()
-        # Continue forward pass
         y_hat = self.fc_y_hat(out)
         tau = self.fc_tau(out)
         return [y_hat, tau * self.K]
@@ -70,7 +69,7 @@ class LstmMle_2(nn.Module):
     Subsequent fully connected tanh activation neural network is split into two sub-networks.
     One is for predicting y_hat, the other for predicting tau.
     """
-    def __init__(self, batch_size, input_dim, n_hidden_lstm, n_layers, dropout_rate_lstm, dropout_rate_fc, n_hidden_fc_1, n_hidden_fc_2, K):
+    def __init__(self, batch_size, input_dim, n_hidden_lstm, n_layers, dropout_rate_lstm, dropout_rate_fc, n_hidden_fc_1, K):
         super(LstmMle_2, self).__init__()
         # Attributes for LSTM Network
         self.input_dim = input_dim
@@ -80,9 +79,7 @@ class LstmMle_2(nn.Module):
         self.dropout_rate_fc = dropout_rate_fc
         self.dropout_rate_lstm = dropout_rate_lstm
         self.n_hidden_fc_1 = n_hidden_fc_1
-        self.n_hidden_fc_2 = n_hidden_fc_2
-        self.current_latent_space_y_hat = None
-        self.current_latent_space_tau = None
+        self.current_cell_state = None
         self.K = K
         
         # Definition of NN layer
@@ -112,6 +109,9 @@ class LstmMle_2(nn.Module):
         # Length of input data can varry 
         length_seq = input_data.size()[1]
         last_out = lstm_out[:,length_seq-1,:]
+        
+        # Get current cell state
+        self.current_cell_state = torch.squeeze(cell_state).detach()
 
         # Forward path through the subsequent fully connected tanh activation 
         # neural network with 2q output channels
@@ -119,17 +119,12 @@ class LstmMle_2(nn.Module):
         out_y_hat = self.fc1_y_hat(last_out)
         out_y_hat = self.dropout_y_hat(out_y_hat)
         out_y_hat = torch.tanh(out_y_hat)
-        # Store current latent space 
-        self.current_latent_space_y_hat = out_y_hat.detach()
-        # Continue forward pass
         y_hat = self.fc2_y_hat(out_y_hat)
         
         # Subnetwork for prediction of tau
         out_tau = self.fc1_tau(last_out)
         out_tau = self.dropout_tau(out_tau)
         out_tau = torch.tanh(out_tau)
-        # Store current latent space 
-        self.current_latent_space_tau = out_tau.detach()
         tau = self.fc2_tau(out)
         
         return [y_hat, tau * self.K]
@@ -158,8 +153,7 @@ class LstmMle_3(nn.Module):
         self.dropout_rate_lstm = dropout_rate_lstm
         self.n_hidden_fc_1 = n_hidden_fc_1
         self.n_hidden_fc_2 = n_hidden_fc_2
-        self.current_latent_space_y_hat = None
-        self.current_latent_space_tau = None
+        self.current_cell_state = None
         self.K = K
         
         # Definition of NN layer
@@ -190,6 +184,9 @@ class LstmMle_3(nn.Module):
         # Length of input data can varry 
         length_seq = input_data.size()[1]
         last_out = lstm_out[:,length_seq-1,:]
+        
+        # Get current cell state
+        self.current_cell_state = torch.squeeze(cell_state).detach()
 
         # Forward path through the subsequent fully connected tanh activation 
         # neural network with 2q output channels
@@ -200,9 +197,6 @@ class LstmMle_3(nn.Module):
         out_y_hat = self.fc2_y_hat(out_y_hat)
         out_y_hat = self.dropout(out_y_hat)
         out_y_hat = torch.tanh(out_y_hat)
-        # Store current latent space 
-        self.current_latent_space_y_hat = out_y_hat.detach()
-        # Continue forward pass
         y_hat = self.fc3_y_hat(out_y_hat)
         
         # Subnetwork for prediction of tau
@@ -212,8 +206,6 @@ class LstmMle_3(nn.Module):
         out_tau = self.fc2_tau(out_tau)
         out_tau = self.dropout(out_tau)
         out_tau = torch.tanh(out_tau)
-        # Store current latent space 
-        self.current_latent_space_tau = out_tau.detach()
         tau = self.fc3_tau(out_tau)
         
         return [y_hat, tau * self.K]

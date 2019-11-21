@@ -46,7 +46,7 @@ class PredictorMleCellState():
 
             # Forward propagation
             mu, tau = self.model(input_data, hidden)
-            cell_state_batch = self.model.current_latent_space
+            cell_state_batch = self.model.current_cell_state
                 
             # Because of the transformation of sigma inside the LossModuleMle (σ_t = exp(τ_t))
             # we have to revert this transformation with exp(tau_i).

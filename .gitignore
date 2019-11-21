@@ -1,7 +1,7 @@
 
 # Don't track content of these folders
 venv_pm/
-models/
+models/cross_validation/
 data/cpps_data/
 data/cpps_degradation_new/
 data/cpps_degradation_old_new/

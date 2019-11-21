@@ -4,6 +4,7 @@ import torch.optim as optim
 import pandas as pd
 import numpy as np
 import builtins
+from random import randint
 
 class Trainer():
     def __init__(self, model, optimizer, scheduler, scheduler_active, criterion, 
@@ -19,7 +20,7 @@ class Trainer():
         self.epoch_validation_loss = []
         self.lowest_loss = 99
         self.trials = 0
-        self.fold = "Fold_xx"
+        self.fold = "final_model_"
         self.patience = patience
         self.location_model = location_model
         self.location_stats = location_stats
@@ -84,11 +85,9 @@ class Trainer():
         self.epoch_training_loss = []
         self.epoch_validation_loss = []
                  
-    def save_model(self, epoch, mean_epoch_validation_loss, input_size, n_lstm_layer, 
-                   n_hidden_lstm, n_hidden_fc, seq_size):
+    def save_model(self, epoch, mean_epoch_validation_loss, ID):
         
-        path_model = self.location_model+self.fold+"_InputSize"+str(input_size)+"_LayerLstm"+ str(n_lstm_layer)+ \
-                    "_HiddenLstm"+str(n_hidden_lstm)+"_HiddenFc"+str(n_hidden_fc)+"_Seq"+str(seq_size)+".pt"
+        path_model = self.location_model+self.fold+"id"+ID
         
         if mean_epoch_validation_loss < self.lowest_loss:
             self.trials = 0
@@ -107,15 +106,9 @@ class Trainer():
             self.trials += 1
             if self.trials >= self.patience :
                 print("Early stopping on epoch {}".format(epoch))
-                return False
+                return False, path_model
             return True, path_model
-    
-    def save_statistic(self, hist_loss, sequenze_size, n_lstm_layer, n_hidden_lstm, n_hidden_fc, time):
-        with open(self.location_stats, 'a') as file:
-            file.write("\n"+str(round(min(hist_loss),2))+","+str(sequenze_size)+","+str(n_lstm_layer)+","+ \
-                       str(n_hidden_lstm)+","+str(n_hidden_fc)+","+str(round(time,1)))
-
-            
+                     
 class TrainerLatentSpaceAnalyser():
     def __init__(self, model, optimizer, scheduler, scheduler_active, criterion_prediction, 
                  criterion_ls, patience, location_model, location_stats):
