@@ -4,14 +4,14 @@ import torch.optim as optim
 import pandas as pd
 import numpy as np
 import builtins
+import math
 
 class PredictorMse():
-    def __init__(self, model, path_data, columns_to_ignore, threshold_anomaly):
+    def __init__(self, model, path_data, columns_to_ignore):
         self.model = model
         self.path_data = path_data
         self.column_names_data = self.get_column_names_data()
         self.columns_to_ignore = columns_to_ignore
-        self.threshold_anomaly = threshold_anomaly
 
     def get_column_names_data(self):
         with open(self.path_data, 'r') as f:
@@ -50,32 +50,22 @@ class PredictorMse():
                 # Reshape and Calculate prediction metrics
                 predicted_data = output[batch,:].data.numpy().tolist()
                 ground_truth = target_data[batch,:].data.numpy().tolist()
-                reconstruction_error_per_sensor = [(ground_truth_i - predicted_i)**2 for ground_truth_i, predicted_i in zip(ground_truth, predicted_data )]
+                reconstruction_error_per_sensor = [math.sqrt((ground_truth_i - predicted_i)**2) for ground_truth_i, predicted_i in zip(ground_truth, predicted_data )]
 
                 # Add values to dataframe
                 data = [id_target[batch].item()] + ground_truth + predicted_data + reconstruction_error_per_sensor
                 batch_results.append(data)
                         
         return batch_results
-        
-    def detect_anomaly(self, results_prediction):
-        # Drop all empty columns
-        results_prediction.drop(results_prediction.columns[results_prediction.columns.str.contains('unnamed',case = False)],axis = 1, inplace = True)
-        
-        # tag sample as an anomaly (1) if loss is higher than given threshold, otherwhise 0 
-        for no_sensor in range(1,self.model.input_dim+1):
-            results_prediction["Anomaly Sensor_"+str(no_sensor)]=np.where(results_prediction.iloc[:,no_sensor+2*self.model.input_dim]>=self.threshold_anomaly[no_sensor-1], 1, 0)
-        return results_prediction
 
     
 class PredictorMle():
-    def __init__(self, model, path_data, columns_to_ignore, threshold_anomaly, no_standard_deviation):
+    def __init__(self, model, path_data, columns_to_ignore, threshold_anomaly):
         self.model = model
         self.path_data = path_data
         self.column_names_data = self.get_column_names_data()
         self.columns_to_ignore = columns_to_ignore
         self.threshold_anomaly = threshold_anomaly
-        self.no_standard_deviation = no_standard_deviation
 
     def get_column_names_data(self):
         with open(self.path_data, 'r') as f:
@@ -127,26 +117,3 @@ class PredictorMle():
                 batch_results.append(data)
 
         return batch_results
-
-    def detect_anomaly(self, results_prediction):
-        # Drop all empty columns
-        results_prediction.drop(results_prediction.columns[results_prediction.columns.str.contains('unnamed',case = False)],axis = 1, inplace = True)
-        
-        for no_sensor in range(1,self.model.input_dim+1):
-            sensor_target = results_prediction.iloc[:,no_sensor].values
-            sensor_mu = results_prediction.iloc[:,no_sensor+self.model.input_dim].values
-            sensor_sigma = results_prediction.iloc[:,no_sensor+2*self.model.input_dim].values
-            
-            # tag sample as an anomaly (1) if sensor value is higher or lower than given confidence band, otherwhise 0 
-            anomaly = []
-            for target_i, mu_i, sigma_i in zip(sensor_target, sensor_mu, sensor_sigma):
-                if target_i < (mu_i - self.no_standard_deviation * sigma_i):
-                    anomaly.append(1)
-                elif target_i > (mu_i + self.no_standard_deviation * sigma_i):
-                    anomaly.append(1)
-                else:
-                    anomaly.append(0)
-            
-            results_prediction["Anomaly Sensor_"+str(no_sensor)]= anomaly
-        return results_prediction
-

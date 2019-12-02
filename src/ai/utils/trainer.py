@@ -8,7 +8,7 @@ from random import randint
 
 class Trainer():
     def __init__(self, model, optimizer, scheduler, scheduler_active, criterion, 
-                 patience, location_model, location_stats):
+                 patience, location_model):
         self.model = model
         # lr=1. because of scheduler (1*learning_rate_schedular)
         self.optimizer = optimizer
@@ -18,12 +18,11 @@ class Trainer():
         self.criterion = criterion
         self.epoch_training_loss = []
         self.epoch_validation_loss = []
-        self.lowest_loss = 99
+        self.lowest_val_loss = 99
+        self.lowest_train_loss = 99
         self.trials = 0
-        self.fold = "final_model_"
         self.patience = patience
         self.location_model = location_model
-        self.location_stats = location_stats
     
     def train(self, data_loader_training):
         for batch_number, (input_data, target_data) in enumerate(data_loader_training):
@@ -60,7 +59,7 @@ class Trainer():
         # Return mean of loss over all training iterations
         return sum(self.epoch_training_loss) / float(len(self.epoch_training_loss))
     
-    def evaluate(self, data_loader_validation, hist_loss, epoch):
+    def evaluate(self, data_loader_validation, epoch):
         for batch_number, data in enumerate(data_loader_validation):
             with torch.no_grad():
                 input_data, target_data = data
@@ -75,10 +74,8 @@ class Trainer():
         # Return mean of loss over all validation iterations
         return sum(self.epoch_validation_loss) / float(len(self.epoch_validation_loss))
             
-    def cache_history_training(self, hist_loss, epoch, mean_epoch_training_loss, mean_epoch_validation_loss):
-        # Save training and validation loss to history
-        history = {'epoch': epoch, 'training': mean_epoch_training_loss, 'validation': mean_epoch_validation_loss}
-        hist_loss.append(history)     
+    def cache_history_training(self, epoch, mean_epoch_training_loss, mean_epoch_validation_loss):
+        print("-------- epoch_no. {} finished with train loss {}--------".format(epoch, mean_epoch_training_loss))
         print("-------- epoch_no. {} finished with eval loss {}--------".format(epoch, mean_epoch_validation_loss))
             
         # Empty list for new epoch 
@@ -87,11 +84,12 @@ class Trainer():
                  
     def save_model(self, epoch, mean_epoch_validation_loss, ID):
         
-        path_model = self.location_model+self.fold+"id"+ID
+        path_model = self.location_model+"id"+ID
         
-        if mean_epoch_validation_loss < self.lowest_loss:
+        if mean_epoch_validation_loss < self.lowest_val_loss:
             self.trials = 0
-            self.lowest_loss = mean_epoch_validation_loss
+            self.lowest_val_loss = mean_epoch_validation_loss
+            
             torch.save({
                 'model_state_dict': self.model.state_dict(),
                 'optimizer_state_dict': self.optimizer.state_dict(),
@@ -201,6 +199,7 @@ class TrainerLatentSpaceAnalyser():
         if mean_epoch_validation_loss < self.lowest_loss:
             self.trials = 0
             self.lowest_loss = mean_epoch_validation_loss
+            self.lowest_train_loss = mean_epoch_training_loss
             torch.save({
                 'model_state_dict': self.model.state_dict(),
                 'optimizer_state_dict': self.optimizer.state_dict(),
