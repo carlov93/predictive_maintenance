@@ -1,6 +1,6 @@
 class Logger():
     def __init__(self, base_path, ID):
-        self.path = base_path + "id" + ID
+        self.path = base_path + "id" + ID + ".txt"
         
     def log_current_statistics(self, epoch, mean_epoch_training_loss):
         with open(self.path, 'a+') as file:

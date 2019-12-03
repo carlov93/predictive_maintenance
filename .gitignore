@@ -1,14 +1,12 @@
 
 # Don't track content of these folders
 venv_pm/
-models/cross_validation/
 data/cpps_data/
 data/cpps_degradation_new/
 data/cpps_degradation_old_new/
 data/cpps_degradation_old/
 data/phm_data_challenge/
 src/visualisation/files/
-src/visualisation/graphs/
 deprecated/
 own_research/
 
