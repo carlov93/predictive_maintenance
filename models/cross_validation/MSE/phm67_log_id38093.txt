@@ -1,0 +1,1019 @@
+Validation Data : Fold 1
+
+# ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## #
+
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.7587723535727479
+Lowest validation loss for this configuration: 1.109729294555528
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6937831732259264
+Lowest validation loss for this configuration: 1.0642042414460864
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.563747048700542
+Lowest validation loss for this configuration: 0.9417368118805545
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6856391766020845
+Lowest validation loss for this configuration: 1.056432670631579
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.632864332034631
+Lowest validation loss for this configuration: 0.9379489082140582
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.49077681034562365
+Lowest validation loss for this configuration: 0.8601396219666515
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.7014523807257329
+Lowest validation loss for this configuration: 1.007978165511574
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6440632789185736
+Lowest validation loss for this configuration: 0.981442553882088
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.5196373675915312
+Lowest validation loss for this configuration: 0.8852089607396296
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.7600149659621556
+Lowest validation loss for this configuration: 1.08091802334991
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6938481424025208
+Lowest validation loss for this configuration: 1.036144431980177
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.561997909058263
+Lowest validation loss for this configuration: 0.9170694953280276
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6865075057582577
+Lowest validation loss for this configuration: 1.0342814664559803
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6330060688882041
+Lowest validation loss for this configuration: 0.9165087088856889
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.4884402758465015
+Lowest validation loss for this configuration: 0.8416518376026859
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6991206031891003
+Lowest validation loss for this configuration: 0.9805843363805063
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6465950356607626
+Lowest validation loss for this configuration: 0.9612595005025124
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.5178423317637202
+Lowest validation loss for this configuration: 0.8660655173762092
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.7675954528910262
+Lowest validation loss for this configuration: 1.0550864604583314
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.7001284027592949
+Lowest validation loss for this configuration: 1.0098475523336337
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.5674136508995485
+Lowest validation loss for this configuration: 0.8947259772612258
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6927449198935581
+Lowest validation loss for this configuration: 1.0105786625469146
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6401832824531448
+Lowest validation loss for this configuration: 0.8960851619323326
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.49317918025022095
+Lowest validation loss for this configuration: 0.820779482218935
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.7051806464437882
+Lowest validation loss for this configuration: 0.957815070043123
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6523833470251357
+Lowest validation loss for this configuration: 0.9413429235671322
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.5234174751816363
+Lowest validation loss for this configuration: 0.8470701397710675
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Validation Data : Fold 2
+
+# ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## #
+
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.7493629850865431
+Lowest validation loss for this configuration: 0.8479327127656766
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6837576862116239
+Lowest validation loss for this configuration: 0.762943524066891
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.5663371596815017
+Lowest validation loss for this configuration: 0.6131278260563101
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6892113279512277
+Lowest validation loss for this configuration: 0.7352836403676442
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6287387089543293
+Lowest validation loss for this configuration: 0.7001379477871316
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.49580402694337716
+Lowest validation loss for this configuration: 0.5127892622788037
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6924686178522491
+Lowest validation loss for this configuration: 0.7621921225317887
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6395844047603779
+Lowest validation loss for this configuration: 0.70084020313727
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.526336884175336
+Lowest validation loss for this configuration: 0.5433668776516404
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.738728743998145
+Lowest validation loss for this configuration: 0.8488778280972065
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6748932637993681
+Lowest validation loss for this configuration: 0.766170936167754
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.5594643279885158
+Lowest validation loss for this configuration: 0.6175140797385368
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6837529653786587
+Lowest validation loss for this configuration: 0.74118301675109
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.62073438538997
+Lowest validation loss for this configuration: 0.7024756024902066
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.49032171196046054
+Lowest validation loss for this configuration: 0.5167203189730216
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6834821508866138
+Lowest validation loss for this configuration: 0.7658273507294984
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6347399485007242
+Lowest validation loss for this configuration: 0.7093775854167668
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.5210032557993842
+Lowest validation loss for this configuration: 0.5487400554505916
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.7360674717909831
+Lowest validation loss for this configuration: 0.8600894343194574
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6712870280825446
+Lowest validation loss for this configuration: 0.775854961437628
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.5570228062541245
+Lowest validation loss for this configuration: 0.627530003990978
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6813528280853071
+Lowest validation loss for this configuration: 0.7546860741429724
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6180160771835405
+Lowest validation loss for this configuration: 0.7111164735132005
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.4893013300383166
+Lowest validation loss for this configuration: 0.525932826215488
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6806379457584079
+Lowest validation loss for this configuration: 0.777275450705269
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6343952890994011
+Lowest validation loss for this configuration: 0.7207281619656918
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.5208901404894506
+Lowest validation loss for this configuration: 0.5590820799646683
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Validation Data : Fold 3
+
+# ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## #
+
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.7490220456734143
+Lowest validation loss for this configuration: 0.625869117707014
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6845381498436038
+Lowest validation loss for this configuration: 0.5654293974446399
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.5583812641768542
+Lowest validation loss for this configuration: 0.4419810275712184
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6829341583513964
+Lowest validation loss for this configuration: 0.5501274090302842
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6236891056509328
+Lowest validation loss for this configuration: 0.5136455065097127
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.4870851581063756
+Lowest validation loss for this configuration: 0.37197491905838254
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6915799674720678
+Lowest validation loss for this configuration: 0.5719202671349048
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6354007960889988
+Lowest validation loss for this configuration: 0.5172137647590467
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.5157666217354964
+Lowest validation loss for this configuration: 0.4041476074712617
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.7398022747333259
+Lowest validation loss for this configuration: 0.6262178793164163
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6760438975516572
+Lowest validation loss for this configuration: 0.5669749332763169
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.553374965599316
+Lowest validation loss for this configuration: 0.44511171095929614
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6780088620734033
+Lowest validation loss for this configuration: 0.5525514362037353
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6161326876305485
+Lowest validation loss for this configuration: 0.5126971042383163
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.4828108472738907
+Lowest validation loss for this configuration: 0.37332038523136885
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6842426441360557
+Lowest validation loss for this configuration: 0.5724568467201858
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6316167740040881
+Lowest validation loss for this configuration: 0.5198624973399457
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.5104456759227108
+Lowest validation loss for this configuration: 0.40450665229695965
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.738016751076799
+Lowest validation loss for this configuration: 0.6338619343719857
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6739996705921899
+Lowest validation loss for this configuration: 0.5739729749818527
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.5514356425315112
+Lowest validation loss for this configuration: 0.45103337504836016
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6766825157791982
+Lowest validation loss for this configuration: 0.5624710511242927
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.617489257991487
+Lowest validation loss for this configuration: 0.5237471588757322
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.48205136446190305
+Lowest validation loss for this configuration: 0.3801225732719569
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.681750162944039
+Lowest validation loss for this configuration: 0.5797675221790235
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6312059221473691
+Lowest validation loss for this configuration: 0.5282021515981056
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.5106573305100867
+Lowest validation loss for this configuration: 0.4115389986570145
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Validation Data : Fold 4
+
+# ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## #
+
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.745641817810363
+Lowest validation loss for this configuration: 0.6648862761684826
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6820343426573174
+Lowest validation loss for this configuration: 0.6078504181674549
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.5550417544591382
+Lowest validation loss for this configuration: 0.48364711522843157
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6825607177788138
+Lowest validation loss for this configuration: 0.5859297547830002
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6188615178730122
+Lowest validation loss for this configuration: 0.5503654541373253
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.4838222419313172
+Lowest validation loss for this configuration: 0.4114026190223438
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6885048221126837
+Lowest validation loss for this configuration: 0.6114378890097141
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6310787138232269
+Lowest validation loss for this configuration: 0.5511403965651989
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 8
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.5121543275569871
+Lowest validation loss for this configuration: 0.4442730533853173
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.7363919914124915
+Lowest validation loss for this configuration: 0.6652138050966736
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6736385752819123
+Lowest validation loss for this configuration: 0.607963848319547
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.5500713775429454
+Lowest validation loss for this configuration: 0.4866013730565707
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6773833406066975
+Lowest validation loss for this configuration: 0.5892224523121085
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6123029922350642
+Lowest validation loss for this configuration: 0.5515905263223525
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.4792934759005363
+Lowest validation loss for this configuration: 0.4127734371931988
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6815198855770193
+Lowest validation loss for this configuration: 0.6128169924084996
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.626385821448372
+Lowest validation loss for this configuration: 0.5551337150428658
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 21
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.5067468359005098
+Lowest validation loss for this configuration: 0.4451894710504118
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.7343008516430278
+Lowest validation loss for this configuration: 0.6706100487431814
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6717396498692925
+Lowest validation loss for this configuration: 0.6143671221901165
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 8
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.5493501107797156
+Lowest validation loss for this configuration: 0.4923175089277847
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6768164387364066
+Lowest validation loss for this configuration: 0.596262401697594
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6123282327396942
+Lowest validation loss for this configuration: 0.5591965219114235
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 13
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.4782257484688648
+Lowest validation loss for this configuration: 0.41942545355319283
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 8
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6790656913198091
+Lowest validation loss for this configuration: 0.6183391926117068
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 21
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.6262143644025515
+Lowest validation loss for this configuration: 0.5616291657804923
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Start with new hyperparameters in grid search: 
+Sequence_size: 55
+Number LSTM Layers: 1
+LSTM Number Hidden Dimensions: 21
+FC NN Number Hidden Dimensions: 55
+Stopped training on this partion at epoch 10
+Lowest training loss for this configuration: 0.5065935806705755
+Lowest validation loss for this configuration: 0.45167531367759545
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+
+# ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## #
+
+Finished Cross-Validation
+
+# ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## #
+
+
+
+
+# ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## #
+
+Training phase of final model started with this configration:
+Number LSTM Hidden Units: 13
+Sequence Length: 8
+Number LSTM Layer: 1
+Number FC Hidden Units: 55
+
+# ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## #
+
+Training phase is finished with training loss: 0.4261119940770903
+
+
+
+# ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## #
+
+Mean loss of test dataset is 0.16009104157732182
+
+# ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## #
+
+Cross Validation finished

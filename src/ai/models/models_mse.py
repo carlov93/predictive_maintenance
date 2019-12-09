@@ -52,3 +52,4 @@ class LstmMse(nn.Module):
         h0 = torch.zeros(self.n_layers, self.batch_size, self.n_hidden_lstm, requires_grad=False)
         c0 = torch.zeros(self.n_layers, self.batch_size, self.n_hidden_lstm, requires_grad=False)
         return [t for t in (h0, c0)]
+    
