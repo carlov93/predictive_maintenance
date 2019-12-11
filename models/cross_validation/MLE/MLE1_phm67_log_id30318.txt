@@ -1023,11 +1023,11 @@ Training phase 1 of final model started
 
 
 Training phase 2 of final model started
-Training phase 2 is finished with training loss: -1.5787851867413032
+Training phase 2 is finished with training loss: -1.5984897712817454
 
 # ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## #
 
-Mean loss of test dataset is -2.919209236878694
+Mean loss of test dataset is -2.824461246125176
 
 # ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## #
 

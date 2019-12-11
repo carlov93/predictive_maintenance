@@ -60,12 +60,11 @@ class PredictorMse():
 
     
 class PredictorMle():
-    def __init__(self, model, path_data, columns_to_ignore, threshold_anomaly):
+    def __init__(self, model, path_data, columns_to_ignore):
         self.model = model
         self.path_data = path_data
         self.column_names_data = self.get_column_names_data()
         self.columns_to_ignore = columns_to_ignore
-        self.threshold_anomaly = threshold_anomaly
 
     def get_column_names_data(self):
         with open(self.path_data, 'r') as f:

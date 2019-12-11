@@ -261,8 +261,8 @@ class LstmMle_4(nn.Module):
         # Forward propagate LSTM
         # LSTM in Pytorch return two results: the first one usually called output 
         # and the second one (hidden_state, cell_state). 
-        lstm_out_y_hat, (hidden_state_y, cell_state_y) = self.lstm(input_data, hidden)
-        lstm_out_tau, (hidden_state_tau, cell_state_tau) = self.lstm(input_data, hidden)
+        lstm_out_y_hat, (hidden_state_y, cell_state_y) = self.lstm_y_hat(input_data, hidden)
+        lstm_out_tau, (hidden_state_tau, cell_state_tau) = self.lstm_tau(input_data, hidden)
 
         # LSTM returns as output all the hidden_states for all the timesteps (seq), 
         # in other words all of the hidden states throughout

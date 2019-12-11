@@ -33,7 +33,7 @@ class AnomalyClassifier():
             results_prediction["Anomaly Sensor_"+str(no_sensor)]= anomaly
         return results_prediction
         
-    def apply_euclidean_distance_metric(self, results_prediction, no_sensors, threshold_machine, each_sensor=False, threshold_sensors=[]):
+    def apply_euclidean_distance_metric(self, results_prediction, no_sensors, threshold_machine, percentage, each_sensor=False, threshold_sensors=[]):
         """
         This method is for predictions from LSTM Model with mean prediction. 
         This method is for classifiying predictions to normal or anomalous points given a threshold for the hole machine.
@@ -50,12 +50,12 @@ class AnomalyClassifier():
         # tag sample as an anomaly (1) if loss is higher than given threshold, otherwhise 0 
         if each_sensor:
             for i in range(1, no_sensors+1):
-                results_prediction["Anomaly Sensor_"+str(i)]=np.where(results_prediction.iloc[:,i+2*no_sensor]>=threshold_sensors[i-1], 1, 0)
+                results_prediction["Anomaly Sensor_"+str(i)]=np.where(results_prediction.iloc[:,i+2*no_sensors]>=threshold_sensors[i-1]*percentage, 1, 0)
 
             return results_prediction
         else:
             for i in range(1, no_sensors+1):
-                results_prediction["Anomaly Sensor_"+str(i)]=np.where(results_prediction.iloc[:,i+2*no_sensor]>=threshold_machine, 1, 0)
+                results_prediction["Anomaly Sensor_"+str(i)]=np.where(results_prediction.iloc[:,i+2*no_sensors]>=threshold_machine*percentage, 1, 0)
 
             return results_prediction
         

@@ -802,6 +802,7 @@ Finished Cross-Validation
 
 
 
+
 # ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## #
 
 Training phase of final model started with this configration:
@@ -818,11 +819,11 @@ Training phase 1 of final model started
 
 
 Training phase 2 of final model started
-Training phase 2 is finished with training loss: -1.1051021964700956
+Training phase 2 is finished with training loss: -0.8945902598288024
 
 # ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## #
 
-Mean loss of test dataset is -1.4720398544143605
+Mean loss of test dataset is -1.2993544059334903
 
 # ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## #
 
