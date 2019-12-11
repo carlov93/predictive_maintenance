@@ -125,7 +125,7 @@ class LstmMle_2(nn.Module):
         out_tau = self.fc1_tau(last_out)
         out_tau = self.dropout_tau(out_tau)
         out_tau = torch.tanh(out_tau)
-        tau = self.fc2_tau(out)
+        tau = self.fc2_tau(out_tau)
         
         return [y_hat, tau * self.K]
     
