@@ -1,0 +1,39 @@
+Architecture and Training configuration:
+Loss function: MSE
+Batch size: 8
+Input size: 2
+Sequence length: 8
+Hidden units LSTM: 8
+Amount LSTM layer: 1
+Dropout rate LSTM: 0.0
+Dropout rate fc NN: 0.2
+Hidden units fc: 55
+Cycling LR mode: triangular
+Cycling LR base LR: 0.0001
+Cycling LR max LR: 0.0005
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Training phase is started
+-------- epoch_no. 0 finished with training loss 0.7442508120481377--------
+-------- epoch_no. 1 finished with training loss 0.626363263638675--------
+-------- epoch_no. 2 finished with training loss 0.5596452090464138--------
+-------- epoch_no. 3 finished with training loss 0.517177895403083--------
+-------- epoch_no. 4 finished with training loss 0.4889964320850019--------
+-------- epoch_no. 5 finished with training loss 0.4679352580544581--------
+-------- epoch_no. 6 finished with training loss 0.4513827288906317--------
+-------- epoch_no. 7 finished with training loss 0.4378867461499846--------
+-------- epoch_no. 8 finished with training loss 0.4269419210196193--------
+-------- epoch_no. 9 finished with training loss 0.4176903092972633--------
+-------- epoch_no. 10 finished with training loss 0.40962729362428146--------
+-------- epoch_no. 11 finished with training loss 0.40250901141733614--------
+-------- epoch_no. 12 finished with training loss 0.3961469060222891--------
+-------- epoch_no. 13 finished with training loss 0.3905354066035385--------
+-------- epoch_no. 14 finished with training loss 0.38526696449836845--------
+-------- epoch_no. 15 finished with training loss 0.38032094860713644--------
+-------- epoch_no. 16 finished with training loss 0.37585429705393536--------
+-------- epoch_no. 17 finished with training loss 0.37170724796915583--------
+-------- epoch_no. 18 finished with training loss 0.36772399271972733--------
+-------- epoch_no. 19 finished with training loss 0.36401468146707855--------
+Training phase is finished
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Mean Reconstruction Error: [0.13679444326055645, 0.5441877437706729]
+Max Reconstruction Error: [0.7012361884117126, 3.1871493458747864]
