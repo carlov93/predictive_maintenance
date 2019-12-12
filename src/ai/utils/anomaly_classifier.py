@@ -30,7 +30,7 @@ class AnomalyClassifier():
                 else:
                     anomaly.append(0)
             
-            results_prediction["Anomaly Sensor_"+str(no_sensor)]= anomaly
+            results_prediction["Anomaly Sensor_"+str(i)]= anomaly
         return results_prediction
         
     def apply_euclidean_distance_metric(self, results_prediction, no_sensors, threshold_machine, percentage, each_sensor=False, threshold_sensors=[]):
