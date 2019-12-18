@@ -223,7 +223,7 @@ class LstmMle_4(nn.Module):
     Two seperate sub-networks 
     One is for predicting y_hat, the other for predicting tau.
     """
-    def __init__(self, batch_size, input_dim, n_hidden_lstm, n_layers, dropout_rate_lstm, dropout_rate_fc, n_hidden_fc_1, n_hidden_fc_2, K):
+    def __init__(self, batch_size, input_dim, n_hidden_lstm, n_layers, dropout_rate_lstm, dropout_rate_fc, n_hidden_fc_1, K):
         super(LstmMle_4, self).__init__()
         # Attributes for LSTM Network
         self.input_dim = input_dim
@@ -233,7 +233,6 @@ class LstmMle_4(nn.Module):
         self.dropout_rate_fc = dropout_rate_fc
         self.dropout_rate_lstm = dropout_rate_lstm
         self.n_hidden_fc_1 = n_hidden_fc_1
-        self.n_hidden_fc_2 = n_hidden_fc_2
         self.current_cell_state = None
         self.K = K
         
@@ -252,10 +251,8 @@ class LstmMle_4(nn.Module):
         self.fc1_y_hat = nn.Linear(self.n_hidden_lstm, self.n_hidden_fc_1)
         self.fc1_tau = nn.Linear(self.n_hidden_lstm, self.n_hidden_fc_1)
         self.dropout = nn.Dropout(p=self.dropout_rate_fc)
-        self.fc2_y_hat = nn.Linear(self.n_hidden_fc_1, self.n_hidden_fc_2)
-        self.fc2_tau = nn.Linear(self.n_hidden_fc_1, self.n_hidden_fc_2)
-        self.fc3_y_hat = nn.Linear(self.n_hidden_fc_2, self.input_dim)
-        self.fc3_tau = nn.Linear(self.n_hidden_fc_2, self.input_dim)
+        self.fc2_y_hat = nn.Linear(self.n_hidden_fc_1, self.input_dim)
+        self.fc2_tau = nn.Linear(self.n_hidden_fc_1, self.input_dim)
         
     def forward(self, input_data, hidden):
         # Forward propagate LSTM
@@ -282,19 +279,13 @@ class LstmMle_4(nn.Module):
         out_y_hat = self.fc1_y_hat(last_out_y_hat)
         out_y_hat = self.dropout(out_y_hat)
         out_y_hat = torch.tanh(out_y_hat)
-        out_y_hat = self.fc2_y_hat(out_y_hat)
-        out_y_hat = self.dropout(out_y_hat)
-        out_y_hat = torch.tanh(out_y_hat)
-        y_hat = self.fc3_y_hat(out_y_hat)
+        y_hat = self.fc2_y_hat(out_y_hat)
         
         # Subnetwork for prediction of tau
         out_tau = self.fc1_tau(last_out_tau)
         out_tau = self.dropout(out_tau)
         out_tau = torch.tanh(out_tau)
-        out_tau = self.fc2_tau(out_tau)
-        out_tau = self.dropout(out_tau)
-        out_tau = torch.tanh(out_tau)
-        tau = self.fc3_tau(out_tau)
+        tau = self.fc2_tau(out_tau)
         
         return [y_hat, tau * self.K]
     
