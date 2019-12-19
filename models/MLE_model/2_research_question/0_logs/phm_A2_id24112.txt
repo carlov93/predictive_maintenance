@@ -1,0 +1,55 @@
+Architecture and Training configuration:
+Loss function: MLE
+Architecture: LSTM module and a subsequent seperate 2 layer FCNN for mu and sigma each
+Batch size: 8
+Input size: 12
+Sequence length: 8
+Hidden units LSTM: 13
+Amount LSTM layer: 1
+Dropout rate LSTM: 0.0
+Dropout rate fc NN: 0.2
+Hidden units fc1: 55
+Hidden units fc2: 55
+Cycling LR mode: triangular
+Cycling LR base LR: 0.0001
+Cycling LR max LR: 0.0005
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Training phase 1 is started
+-------- epoch_no. 0 finished with training loss 0.8230219628142514--------
+-------- epoch_no. 1 finished with training loss 0.6352300596250243--------
+-------- epoch_no. 2 finished with training loss 0.5117599748436892--------
+-------- epoch_no. 3 finished with training loss 0.4326172975061338--------
+-------- epoch_no. 4 finished with training loss 0.3788045605306338--------
+-------- epoch_no. 5 finished with training loss 0.3375160527298829--------
+-------- epoch_no. 6 finished with training loss 0.3044289427772575--------
+-------- epoch_no. 7 finished with training loss 0.2785422960222936--------
+-------- epoch_no. 8 finished with training loss 0.2579696096237617--------
+-------- epoch_no. 9 finished with training loss 0.24111745567812237--------
+-------- epoch_no. 10 finished with training loss 0.22700408668471825--------
+-------- epoch_no. 11 finished with training loss 0.21501914663500926--------
+-------- epoch_no. 12 finished with training loss 0.20475581090509903--------
+-------- epoch_no. 13 finished with training loss 0.19585062246067447--------
+-------- epoch_no. 14 finished with training loss 0.1879344816875139--------
+Training phase 1 is finished
+Training phase 2 is started
+-------- epoch_no. 0 finished with training loss -1.4756403785628494--------
+-------- epoch_no. 1 finished with training loss -1.9798381553380717--------
+-------- epoch_no. 2 finished with training loss -2.2840186275955365--------
+-------- epoch_no. 3 finished with training loss -2.4690390800020547--------
+-------- epoch_no. 4 finished with training loss -2.5893065114981324--------
+-------- epoch_no. 5 finished with training loss -2.6770356889861073--------
+-------- epoch_no. 6 finished with training loss -2.750962550587334--------
+-------- epoch_no. 7 finished with training loss -2.819711958650873--------
+-------- epoch_no. 8 finished with training loss -2.8779859621328443--------
+-------- epoch_no. 9 finished with training loss -2.9263434301094504--------
+-------- epoch_no. 10 finished with training loss -2.968907964385586--------
+-------- epoch_no. 11 finished with training loss -3.0126433818067344--------
+-------- epoch_no. 12 finished with training loss -3.052414842327233--------
+-------- epoch_no. 13 finished with training loss -3.084706280386537--------
+-------- epoch_no. 14 finished with training loss -3.1146812249953553--------
+-------- epoch_no. 15 finished with training loss -3.1447700325995136--------
+-------- epoch_no. 16 finished with training loss -3.171971281887684--------
+-------- epoch_no. 17 finished with training loss -3.194600819834451--------
+-------- epoch_no. 18 finished with training loss -3.2146407526288403--------
+-------- epoch_no. 19 finished with training loss -3.2373018092364867--------
+Training phase 2 is finished
