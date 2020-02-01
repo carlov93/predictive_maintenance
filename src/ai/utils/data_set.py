@@ -20,7 +20,7 @@ class DataSetSensors(Dataset):
         :param timesteps: Sequence length of time series.
         """
         self.data = data
-        self.generator = TimeseriesGenerator(data=self.data, target=self.data, length=timesteps, batch_size=1)
+        self.generator = TimeseriesGenerator(data=self.data, targets=self.data, length=timesteps, batch_size=1)
 
     def __getitem__(self, index):
         """
