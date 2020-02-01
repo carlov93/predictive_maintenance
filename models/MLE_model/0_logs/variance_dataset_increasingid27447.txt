@@ -1,0 +1,33 @@
+Architecture and Training configuration:
+Loss function: MLE
+Architecture: LSTM module and a subsequent FCNN (2 layers, last splited for mu and sigma)
+Batch size: 2
+Input size: 1
+Sequence length: 36
+Hidden units LSTM: 5
+Amount LSTM layer: 1
+Dropout rate LSTM: 0.0
+Dropout rate fc NN: 0.0
+Hidden units fc1: 20
+Hidden units fc2: 20
+Cycling LR mode: triangular
+Cycling LR base LR: 0.0001
+Cycling LR max LR: 0.0005
+- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+Training phase 1 is started
+-------- epoch_no. 0 finished with training loss 1.6167345476891786--------
+-------- epoch_no. 1 finished with training loss 1.516933347702344--------
+-------- epoch_no. 2 finished with training loss 1.4782600685506877--------
+-------- epoch_no. 3 finished with training loss 1.4586702030223164--------
+-------- epoch_no. 4 finished with training loss 1.4466208773869935--------
+-------- epoch_no. 5 finished with training loss 1.4391708943722534--------
+-------- epoch_no. 6 finished with training loss 1.4288468610433631--------
+-------- epoch_no. 7 finished with training loss 1.424922914535108--------
+Training phase 2 is started
+-------- epoch_no. 0 finished with training loss 1.2651958713794718--------
+-------- epoch_no. 1 finished with training loss 1.2016138265152756--------
+-------- epoch_no. 2 finished with training loss 1.181902572108287--------
+-------- epoch_no. 3 finished with training loss 1.1745838184669468--------
+-------- epoch_no. 4 finished with training loss 1.173324450160235--------
+-------- epoch_no. 5 finished with training loss 1.1721485677927053--------
+-------- epoch_no. 6 finished with training loss 1.1704721754120617--------
