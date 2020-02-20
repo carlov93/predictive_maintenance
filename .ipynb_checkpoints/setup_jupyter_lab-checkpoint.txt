@@ -1,6 +1,0 @@
-# navigate to project root directory
-cd SageMaker/predictive_maintenance/
-# activate virtual environment
-source venv/bin/activate
-# add virtual environment as a kernel 
-ipython kernel install --user --name=masterarbeit
