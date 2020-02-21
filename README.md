@@ -24,7 +24,7 @@ In the third step, one compares the actual sensor values $x_{t+1}$ of the CPS wi
 2. Create virtual environment: 
     - `python3 -m venv venv_cm`
 3. Activate virtual environment:
-    - `source venv_cm/bin/activat`
+    - `source venv_cm/bin/activate`
 4. Install ipykernel to add virtual environment to jupyter lab: 
     - `pip install ipykernel`
     - `ipython kernel install --user --name=condition_monitoring`
