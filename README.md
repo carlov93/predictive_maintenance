@@ -17,7 +17,7 @@ In the third step, one compares the actual sensor values $x_{t+1}$ of the CPS wi
 2. Activate virtual environment:
     - `source venv/bin/activate`
 3. Add virtual environment as a kernel 
-    - `ipython kernel install --user --name=masterarbei`
+    - `ipython kernel install --user --name=masterarbeit`
 
 ## Local 
 1. Navigate to project root directory
@@ -26,7 +26,7 @@ In the third step, one compares the actual sensor values $x_{t+1}$ of the CPS wi
 3. Activate virtual environment:
     - `source venv_cm/bin/activat`
 4. Install ipykernel to add virtual environment to jupyter lab: 
-    - `pip install ipykerne`
+    - `pip install ipykernel`
     - `ipython kernel install --user --name=condition_monitoring`
 5. Install libraries from requirements.txt
 6. Add path of own packages to virtual environment
