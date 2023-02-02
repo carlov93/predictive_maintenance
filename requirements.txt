@@ -85,5 +85,5 @@ traitlets==4.3.2
 UliEngineering==0.3.2
 wcwidth==0.1.7
 webencodings==0.5.1
-Werkzeug==0.15.4
+Werkzeug==0.15.5
 yasm==0.1.0a1
